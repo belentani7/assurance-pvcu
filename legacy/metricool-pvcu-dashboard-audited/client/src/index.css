@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+
+:root { --background: 220 33% 97%; --foreground: 222 47% 11%; --card: 0 0% 100%; --card-foreground: 222 47% 11%; --popover: 0 0% 100%; --popover-foreground: 222 47% 11%; --primary: 239 84% 67%; --primary-foreground: 0 0% 100%; --secondary: 220 14% 96%; --secondary-foreground: 222 47% 11%; --muted: 220 14% 96%; --muted-foreground: 215 16% 47%; --accent: 239 84% 96%; --accent-foreground: 239 84% 50%; --border: 220 13% 91%; --input: 220 13% 91%; --ring: 239 84% 67%; --radius: 1rem; }
+* { border-color: hsl(var(--border)); }
+html, body, #root { min-height: 100%; }
+body { margin: 0; background: #f5f7fb; color: #0f172a; font-family: 'DM Sans', sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4, .brand-mark { font-family: 'Manrope', sans-serif; }
+button { transition: transform .16s cubic-bezier(.23,1,.32,1), box-shadow .16s ease, background-color .16s ease; }
+button:active { transform: scale(.97); }
+.eyebrow { color: #94a3b8; font-size: 10px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+.brand-mark { color: #0f172a; font-size: 15px; font-weight: 800; letter-spacing: .16em; }
+[data-sidebar="sidebar"] { background: rgba(255,255,255,.86); }
+[data-sidebar="menu-button"][data-active="true"] { background: #eef2ff; color: #4f46e5; font-weight: 700; }
+::selection { background: #c7d2fe; color: #312e81; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }

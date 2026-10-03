@@ -1,0 +1,41 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1786908557528,
+      "tag": "0000_smiling_micromax",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1786908820181,
+      "tag": "0001_cloudy_sentinel",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1786910358792,
+      "tag": "0002_wooden_white_tiger",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1787190588619,
+      "tag": "0003_worthless_kabuki",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1787190683385,
+      "tag": "0004_familiar_kulan_gath",
+      "breakpoints": true
+    }
+  ]
+}

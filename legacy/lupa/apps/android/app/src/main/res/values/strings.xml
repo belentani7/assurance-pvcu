@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LUPA</string>
+    <string name="overlay_description">LUPA está activa sobre otras aplicaciones</string>
+    <string name="channel_name">LUPA</string>
+    <string name="channel_description">Control de la burbuja flotante de LUPA</string>
+    <string name="open_overlay_settings">Permitir que LUPA aparezca sobre otras aplicaciones</string>
+    <string name="overlay_denied">Activa el permiso para mostrar LUPA sobre otras aplicaciones.</string>
+    <string name="start_overlay">Activar LUPA flotante</string>
+    <string name="stop_overlay">Desactivar LUPA flotante</string>
+    <string name="overlay_active">LUPA está activa</string>
+    <string name="overlay_inactive">LUPA está desactivada</string>
+    <string name="main_tagline">Una ayuda sencilla que aparece encima de la pantalla cuando la necesitas.</string>
+    <string name="permission_explanation">Para que la burbuja pueda aparecer sobre otras aplicaciones, Android necesita que actives un permiso especial. Tú puedes quitarlo cuando quieras desde Ajustes.</string>
+    <string name="permission_button">Permitir que LUPA aparezca encima</string>
+    <string name="status_permission_ready">El permiso está activo. Puedes encender la burbuja.</string>
+    <string name="status_permission_missing">Falta el permiso para mostrar LUPA encima de otras aplicaciones.</string>
+    <string name="toast_permission_first">Activa primero el permiso de superposición</string>
+    <string name="toast_active">LUPA está activa sobre la pantalla</string>
+    <string name="toast_inactive">LUPA se ha desactivado</string>
+    <string name="android_no_permission_needed">Este Android no necesita este permiso</string>
+    <string name="main_title" translatable="false">LUPA</string>
+    <string name="version_note">Versión 1.0.0 · El texto de la burbuja es una demostración local. La captura de pantalla y el OCR se añadirán después de validar el overlay básico.</string>
+    <string name="overlay_title">LUPA · Traducción sencilla</string>
+    <string name="overlay_choose_concept">Elige un concepto para verlo explicado con palabras sencillas.</string>
+    <string name="overlay_content_description">Abrir LUPA</string>
+    <string name="overlay_hint">Elige un concepto para verlo explicado con palabras sencillas. Toca la burbuja para cerrar el panel o arrástrala para moverla.</string>
+    <string name="concept_variable">Variable</string>
+    <string name="concept_function">Función</string>
+    <string name="concept_loop">Repetir</string>
+    <string name="concept_condition">Si... entonces</string>
+    <string name="explanation_variable">Variable: es un nombre que se usa para guardar algo y encontrarlo después. Como ponerle una etiqueta a una caja.</string>
+    <string name="explanation_function">Función: es una acción preparada. La llamas cuando quieres que el ordenador haga ese trabajo, como pulsar un botón de una máquina.</string>
+    <string name="explanation_loop">Repetir: le dice al ordenador que haga la misma tarea varias veces, como pasar una canción una y otra vez.</string>
+    <string name="explanation_condition">Si... entonces: el ordenador comprueba una cosa y elige qué hacer. Como: si tienes Wi-Fi, usa Wi-Fi; si no, usa datos.</string>
+</resources>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LUPA</string>
+    <string name="overlay_description">LUPA està activa sobre altres aplicacions</string>
+    <string name="channel_name">LUPA</string>
+    <string name="channel_description">Control de la bombolla flotant de LUPA</string>
+    <string name="open_overlay_settings">Permet que LUPA aparegui sobre altres aplicacions</string>
+    <string name="overlay_denied">Activa el permís perquè LUPA es mostri sobre altres aplicacions.</string>
+    <string name="start_overlay">Activa LUPA flotant</string>
+    <string name="stop_overlay">Desactiva LUPA flotant</string>
+    <string name="overlay_active">LUPA està activa</string>
+    <string name="overlay_inactive">LUPA està desactivada</string>
+    <string name="main_tagline">Una ajuda senzilla que apareix damunt de la pantalla quan la necessites.</string>
+    <string name="permission_explanation">Perquè la bombolla pugui aparèixer sobre altres aplicacions, Android necessita que activis un permís especial. El pots treure quan vulguis des d\'Ajustos.</string>
+    <string name="permission_button">Permet que LUPA aparegui damunt</string>
+    <string name="status_permission_ready">El permís està actiu. Pots encendre la bombolla.</string>
+    <string name="status_permission_missing">Falta el permís per mostrar LUPA damunt d\'altres aplicacions.</string>
+    <string name="toast_permission_first">Activa primer el permís de superposició</string>
+    <string name="toast_active">LUPA està activa sobre la pantalla</string>
+    <string name="toast_inactive">LUPA s\'ha desactivat</string>
+    <string name="android_no_permission_needed">Aquest Android no necessita aquest permís</string>
+    <string name="version_note">Versió 1.0.0 · El text de la bombolla és una demostració local. La captura de pantalla i l\'OCR s\'afegiran després de validar la superposició bàsica.</string>
+    <string name="overlay_title">LUPA · Traducció senzilla</string>
+    <string name="overlay_choose_concept">Tria un concepte per veure\'l explicat amb paraules senzilles.</string>
+    <string name="overlay_content_description">Obre LUPA</string>
+    <string name="overlay_hint">Tria un concepte per veure\'l explicat amb paraules senzilles. Toca la bombolla per tancar el panell o arrossega-la per moure-la.</string>
+    <string name="concept_variable">Variable</string>
+    <string name="concept_function">Funció</string>
+    <string name="concept_loop">Repetir</string>
+    <string name="concept_condition">Si... aleshores</string>
+    <string name="explanation_variable">Variable: és un nom que s\'usa per guardar alguna cosa i trobar-la després. Com posar una etiqueta a una capsa.</string>
+    <string name="explanation_function">Funció: és una acció preparada. La crides quan vols que l\'ordinador faci aquella feina, com prémer un botó d\'una màquina.</string>
+    <string name="explanation_loop">Repetir: diu a l\'ordinador que faci la mateixa tasca diverses vegades, com tornar a escoltar una cançó una vegada i una altra.</string>
+    <string name="explanation_condition">Si... aleshores: l\'ordinador comprova una cosa i tria què ha de fer. Com: si tens Wi-Fi, usa Wi-Fi; si no, usa dades.</string>
+</resources>

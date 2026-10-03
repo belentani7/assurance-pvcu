@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LUPA</string>
+    <string name="overlay_description">A LUPA está ativa sobre outras aplicações</string>
+    <string name="channel_name">LUPA</string>
+    <string name="channel_description">Controlo da bolha flutuante da LUPA</string>
+    <string name="open_overlay_settings">Permitir que a LUPA apareça sobre outras aplicações</string>
+    <string name="overlay_denied">Ativa a permissão para mostrar a LUPA sobre outras aplicações.</string>
+    <string name="start_overlay">Ativar LUPA flutuante</string>
+    <string name="stop_overlay">Desativar LUPA flutuante</string>
+    <string name="overlay_active">A LUPA está ativa</string>
+    <string name="overlay_inactive">A LUPA está desativada</string>
+    <string name="main_tagline">Uma ajuda simples que aparece por cima do ecrã quando precisares dela.</string>
+    <string name="permission_explanation">Para que a bolha possa aparecer sobre outras aplicações, o Android precisa que atives uma permissão especial. Podes removê-la quando quiseres nas Definições.</string>
+    <string name="permission_button">Permitir que a LUPA apareça por cima</string>
+    <string name="status_permission_ready">A permissão está ativa. Podes ligar a bolha.</string>
+    <string name="status_permission_missing">Falta a permissão para mostrar a LUPA por cima de outras aplicações.</string>
+    <string name="toast_permission_first">Ativa primeiro a permissão de sobreposição</string>
+    <string name="toast_active">A LUPA está ativa sobre o ecrã</string>
+    <string name="toast_inactive">A LUPA foi desativada</string>
+    <string name="android_no_permission_needed">Este Android não precisa desta permissão</string>
+    <string name="version_note">Versão 1.0.0 · O texto da bolha é uma demonstração local. A captura de ecrã e o OCR serão adicionados depois de validar a sobreposição básica.</string>
+    <string name="overlay_title">LUPA · Tradução simples</string>
+    <string name="overlay_choose_concept">Escolhe um conceito para o veres explicado com palavras simples.</string>
+    <string name="overlay_content_description">Abrir LUPA</string>
+    <string name="overlay_hint">Escolhe um conceito para o veres explicado com palavras simples. Toca na bolha para fechar o painel ou arrasta-a para a mover.</string>
+    <string name="concept_variable">Variável</string>
+    <string name="concept_function">Função</string>
+    <string name="concept_loop">Repetir</string>
+    <string name="concept_condition">Se... então</string>
+    <string name="explanation_variable">Variável: é um nome usado para guardar algo e encontrá-lo depois. É como colocar uma etiqueta numa caixa.</string>
+    <string name="explanation_function">Função: é uma ação preparada. Chamas-lhe quando queres que o computador faça esse trabalho, como carregar num botão de uma máquina.</string>
+    <string name="explanation_loop">Repetir: diz ao computador para fazer a mesma tarefa várias vezes, como ouvir uma música uma e outra vez.</string>
+    <string name="explanation_condition">Se... então: o computador verifica uma coisa e escolhe o que fazer. Como: se tens Wi-Fi, usa Wi-Fi; se não, usa dados.</string>
+</resources>

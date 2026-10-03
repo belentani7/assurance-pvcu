@@ -1,0 +1,17 @@
+.git
+.github
+**/node_modules
+**/dist
+**/coverage
+**/.manus-logs
+**/.gradle
+**/build
+**/*.apk
+**/*.aab
+**/*.jks
+**/*.keystore
+backups
+Proyecto_LUPA_Backup_*.zip
+docs
+tests
+assets

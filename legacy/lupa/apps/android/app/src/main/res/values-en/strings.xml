@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LUPA</string>
+    <string name="overlay_description">LUPA is active over other apps</string>
+    <string name="channel_name">LUPA</string>
+    <string name="channel_description">LUPA floating bubble control</string>
+    <string name="open_overlay_settings">Allow LUPA to appear over other apps</string>
+    <string name="overlay_denied">Turn on the permission to show LUPA over other apps.</string>
+    <string name="start_overlay">Turn on floating LUPA</string>
+    <string name="stop_overlay">Turn off floating LUPA</string>
+    <string name="overlay_active">LUPA is active</string>
+    <string name="overlay_inactive">LUPA is off</string>
+    <string name="main_tagline">A simple helper that appears over the screen when you need it.</string>
+    <string name="permission_explanation">For the bubble to appear over other apps, Android needs you to turn on a special permission. You can remove it any time in Settings.</string>
+    <string name="permission_button">Allow LUPA to appear on top</string>
+    <string name="status_permission_ready">The permission is on. You can turn on the bubble.</string>
+    <string name="status_permission_missing">The permission to show LUPA over other apps is missing.</string>
+    <string name="toast_permission_first">Turn on the overlay permission first</string>
+    <string name="toast_active">LUPA is active over the screen</string>
+    <string name="toast_inactive">LUPA has been turned off</string>
+    <string name="android_no_permission_needed">This Android version does not need this permission</string>
+    <string name="version_note">Version 1.0.0 · The bubble text is a local demonstration. Screen capture and OCR will be added after the basic overlay is validated.</string>
+    <string name="overlay_title">LUPA · Simple translation</string>
+    <string name="overlay_choose_concept">Choose a concept to see it explained in simple words.</string>
+    <string name="overlay_content_description">Open LUPA</string>
+    <string name="overlay_hint">Choose a concept to see it explained in simple words. Tap the bubble to close the panel or drag it to move it.</string>
+    <string name="concept_variable">Variable</string>
+    <string name="concept_function">Function</string>
+    <string name="concept_loop">Repeat</string>
+    <string name="concept_condition">If... then</string>
+    <string name="explanation_variable">Variable: a name used to save something and find it later. It is like putting a label on a box.</string>
+    <string name="explanation_function">Function: a prepared action. You call it when you want the computer to do that job, like pressing a button on a machine.</string>
+    <string name="explanation_loop">Repeat: tells the computer to do the same task several times, like playing a song again and again.</string>
+    <string name="explanation_condition">If... then: the computer checks something and chooses what to do. Like: if you have Wi-Fi, use Wi-Fi; if not, use data.</string>
+</resources>

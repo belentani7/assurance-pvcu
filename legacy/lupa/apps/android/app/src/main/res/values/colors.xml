@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="lupa_blue">#2563EB</color>
+    <color name="lupa_blue_dark">#1D4ED8</color>
+    <color name="lupa_surface">#FFFFFF</color>
+    <color name="lupa_text">#1F2937</color>
+    <color name="lupa_muted">#6B7280</color>
+    <color name="lupa_border">#E5E7EB</color>
+</resources>

@@ -1,0 +1,62 @@
+name: quality
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  web:
+    name: Web quality and build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.4.1
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: apps/web/pnpm-lock.yaml
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Verify formatting
+        run: pnpm format:check
+      - name: Type check
+        run: pnpm check
+      - name: Unit tests and coverage
+        run: pnpm test:coverage
+      - name: Production build
+        run: pnpm build
+
+  android:
+    name: Android quality and release build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/android
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+      - name: Configure Android SDK path
+        run: echo "sdk.dir=$ANDROID_HOME" > local.properties
+      - name: Lint Android sources
+        run: ./gradlew --no-daemon lint
+      - name: Build Android release APK
+        run: ./gradlew --no-daemon assembleRelease
