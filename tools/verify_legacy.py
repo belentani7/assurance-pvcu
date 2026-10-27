@@ -92,6 +92,8 @@ def _tree_digest_fd(directory_fd: int, folder: Path) -> bytes:
 
 def verify(repo_root: Path, manifest_path: Path) -> tuple[dict[str, str], bool]:
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if not isinstance(manifest, dict):
+        raise IntegrityError("manifest must be a JSON object")
     if manifest.get("schema_version") != 1:
         raise IntegrityError("unsupported manifest schema")
     expected = manifest.get("legacy_trees")

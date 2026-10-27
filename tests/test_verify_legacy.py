@@ -1,5 +1,7 @@
 """Regression tests for the read-only legacy Git-tree verifier."""
 import json
+from contextlib import redirect_stdout
+from io import StringIO
 import os
 import subprocess
 import tempfile
@@ -42,6 +44,15 @@ class SnapshotIntegrityTests(unittest.TestCase):
         (self.legacy / "unexpected").mkdir()
         with self.assertRaisesRegex(IntegrityError, "legacy roots differ"):
             verify(self.root, self.manifest)
+
+    def test_non_object_manifest_returns_blocked_json(self):
+        for payload in ("null", "[]", "42", '\"invalid\"'):
+            with self.subTest(payload=payload):
+                self.manifest.write_text(payload, encoding="utf-8")
+                output = StringIO()
+                with redirect_stdout(output):
+                    self.assertEqual(main(["--root", str(self.root), "--json"]), 1)
+                self.assertEqual(json.loads(output.getvalue())["status"], "BLOCKED")
 
     def test_manifest_traversal_rejected(self):
         self.manifest.write_text(json.dumps({"schema_version": 1, "legacy_trees": {"../outside": "0" * 40}}))
