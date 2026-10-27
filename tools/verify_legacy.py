@@ -20,30 +20,55 @@ def git_object(kind: str, payload: bytes) -> bytes:
 
 
 def _tree_digest(folder: Path) -> bytes:
+    """Hash a Git tree using directory handles; never traverse swapped symlinks."""
+    if not (hasattr(os, "O_NOFOLLOW") and hasattr(os, "O_DIRECTORY")
+            and os.open in os.supports_dir_fd and os.stat in os.supports_dir_fd
+            and os.readlink in os.supports_dir_fd):
+        raise IntegrityError("secure directory traversal unsupported on this platform")
+    try:
+        before = folder.lstat()
+        fd = os.open(folder, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+        try:
+            opened = os.fstat(fd)
+            if not stat.S_ISDIR(opened.st_mode) or (opened.st_dev, opened.st_ino) != (before.st_dev, before.st_ino):
+                raise IntegrityError(f"directory changed during verification: {folder}")
+            return _tree_digest_fd(fd, folder)
+        finally:
+            os.close(fd)
+    except OSError as exc:
+        raise IntegrityError(f"cannot inspect {folder}: {exc.strerror}") from exc
+
+
+def _tree_digest_fd(directory_fd: int, folder: Path) -> bytes:
     entries: list[tuple[bytes, bytes, bytes]] = []
     try:
-        children = list(folder.iterdir())
-    except OSError as exc:
-        raise IntegrityError(f"cannot list {folder}: {exc.strerror}") from exc
-    for child in children:
-        name = os.fsencode(child.name)
-        if b"/" in name or b"\0" in name:
-            raise IntegrityError(f"invalid filename in {folder}")
-        try:
-            info = child.lstat()  # NEVER follow symlinks, including directory links.
+        with os.scandir(directory_fd) as scan:
+            children = [entry.name for entry in scan]
+        for child_name in children:
+            name = os.fsencode(child_name)
+            if name in (b".", b"..") or b"/" in name or b"\0" in name:
+                raise IntegrityError(f"invalid filename in {folder}")
+            child = folder / child_name
+            info = os.stat(child_name, dir_fd=directory_fd, follow_symlinks=False)
             if stat.S_ISDIR(info.st_mode):
                 mode = b"40000"
-                digest = _tree_digest(child)
+                fd = os.open(child_name, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=directory_fd)
+                try:
+                    opened = os.fstat(fd)
+                    if (opened.st_dev, opened.st_ino) != (info.st_dev, info.st_ino):
+                        raise IntegrityError(f"directory changed during verification: {child}")
+                    digest = _tree_digest_fd(fd, child)
+                finally:
+                    os.close(fd)
                 sort_name = name + b"/"
             elif stat.S_ISLNK(info.st_mode):
                 mode = b"120000"
-                digest = git_object("blob", os.fsencode(os.readlink(child)))
+                target = os.readlink(child_name, dir_fd=directory_fd)
+                digest = git_object("blob", os.fsencode(target))
                 sort_name = name
             elif stat.S_ISREG(info.st_mode):
                 mode = b"100755" if info.st_mode & 0o111 else b"100644"
-                # Read through an fd with O_NOFOLLOW where supported to resist symlink races.
-                flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0)
-                fd = os.open(child, flags)
+                fd = os.open(child_name, os.O_RDONLY | os.O_NOFOLLOW, dir_fd=directory_fd)
                 try:
                     opened = os.fstat(fd)
                     if not stat.S_ISREG(opened.st_mode) or (opened.st_dev, opened.st_ino) != (info.st_dev, info.st_ino):
@@ -58,10 +83,10 @@ def _tree_digest(folder: Path) -> bytes:
                 sort_name = name
             else:
                 raise IntegrityError(f"special file is not a Git snapshot entry: {child}")
-        except OSError as exc:
-            raise IntegrityError(f"cannot inspect {child}: {exc.strerror}") from exc
-        entries.append((sort_name, mode + b" " + name + b"\0", digest))
-    entries.sort(key=lambda item: item[0])  # Git sorts directory entries as name + '/'.
+            entries.append((sort_name, mode + b" " + name + b"\0", digest))
+    except OSError as exc:
+        raise IntegrityError(f"cannot inspect {folder}: {exc.strerror}") from exc
+    entries.sort(key=lambda item: item[0])
     return git_object("tree", b"".join(header + digest for _, header, digest in entries))
 
 

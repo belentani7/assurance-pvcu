@@ -1,9 +1,11 @@
 """Regression tests for the read-only legacy Git-tree verifier."""
 import json
+import os
 import subprocess
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 from tools.verify_legacy import IntegrityError, _tree_digest, git_object, main, verify
 
 
@@ -55,6 +57,38 @@ class SnapshotIntegrityTests(unittest.TestCase):
         except (OSError, NotImplementedError):
             self.skipTest("symlinks unavailable")
         self.assertEqual(verify(self.root, self.manifest)[1], False)
+
+    def test_directory_replaced_by_symlink_during_walk_is_rejected(self):
+        nested = self.legacy / "demo" / "nested"
+        outside = self.root / "private"
+        outside.mkdir()
+        (outside / "secret.txt").write_text("never read", encoding="utf-8")
+        original_lstat = Path.lstat
+        original_stat = __import__("os").stat
+        replaced = False
+
+        def replace_after_stat(path, *args, **kwargs):
+            nonlocal replaced
+            info = original_lstat(path, *args, **kwargs)
+            if path == nested and not replaced:
+                replaced = True
+                nested.rename(self.root / "moved")
+                nested.symlink_to(outside, target_is_directory=True)
+            return info
+
+        def replace_after_dirfd_stat(path, *args, **kwargs):
+            nonlocal replaced
+            info = original_stat(path, *args, **kwargs)
+            if path == "nested" and kwargs.get("dir_fd") is not None and not replaced:
+                replaced = True
+                nested.rename(self.root / "moved")
+                nested.symlink_to(outside, target_is_directory=True)
+            return info
+
+        with patch.object(Path, "lstat", replace_after_stat), patch("os.stat", replace_after_dirfd_stat), patch.object(os, "supports_dir_fd", os.supports_dir_fd | {replace_after_dirfd_stat}):
+            with self.assertRaises(IntegrityError):
+                _tree_digest(self.legacy / "demo")
+        self.assertTrue(replaced)
 
     def test_git_tree_hash_matches_git(self):
         if subprocess.run(["git", "--version"], capture_output=True).returncode:
