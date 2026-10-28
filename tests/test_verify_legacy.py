@@ -54,6 +54,32 @@ class SnapshotIntegrityTests(unittest.TestCase):
                     self.assertEqual(main(["--root", str(self.root), "--json"]), 1)
                 self.assertEqual(json.loads(output.getvalue())["status"], "BLOCKED")
 
+    def test_schema_version_requires_integer_one(self):
+        original = json.loads(self.manifest.read_text(encoding="utf-8"))
+        for version in (True, 1.0, "1", None):
+            with self.subTest(version=version):
+                self.manifest.write_text(
+                    json.dumps({**original, "schema_version": version}), encoding="utf-8"
+                )
+                output = StringIO()
+                with redirect_stdout(output):
+                    self.assertEqual(main(["--root", str(self.root), "--json"]), 1)
+                self.assertEqual(json.loads(output.getvalue())["status"], "BLOCKED")
+
+    def test_duplicate_manifest_keys_are_rejected(self):
+        digest = _tree_digest(self.legacy / "demo").hex()
+        payloads = (
+            '{"schema_version": 1, "schema_version": 1, "legacy_trees": {"demo": "' + digest + '"}}',
+            '{"schema_version": 1, "legacy_trees": {"demo": "' + digest + '", "demo": "' + digest + '"}}',
+        )
+        for payload in payloads:
+            with self.subTest(payload=payload):
+                self.manifest.write_text(payload, encoding="utf-8")
+                output = StringIO()
+                with redirect_stdout(output):
+                    self.assertEqual(main(["--root", str(self.root), "--json"]), 1)
+                self.assertIn("duplicate manifest JSON key", json.loads(output.getvalue())["error"])
+
     def test_manifest_traversal_rejected(self):
         self.manifest.write_text(json.dumps({"schema_version": 1, "legacy_trees": {"../outside": "0" * 40}}))
         with self.assertRaises(IntegrityError):

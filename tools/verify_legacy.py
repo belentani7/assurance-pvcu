@@ -90,11 +90,23 @@ def _tree_digest_fd(directory_fd: int, folder: Path) -> bytes:
     return git_object("tree", b"".join(header + digest for _, header, digest in entries))
 
 
+def _unique_json_object(pairs: list[tuple[str, object]]) -> dict[str, object]:
+    """Fail closed on ambiguous duplicate keys at any manifest nesting level."""
+    result: dict[str, object] = {}
+    for key, value in pairs:
+        if key in result:
+            raise IntegrityError(f"duplicate manifest JSON key: {key}")
+        result[key] = value
+    return result
+
+
 def verify(repo_root: Path, manifest_path: Path) -> tuple[dict[str, str], bool]:
-    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest = json.loads(
+        manifest_path.read_text(encoding="utf-8"), object_pairs_hook=_unique_json_object
+    )
     if not isinstance(manifest, dict):
         raise IntegrityError("manifest must be a JSON object")
-    if manifest.get("schema_version") != 1:
+    if type(manifest.get("schema_version")) is not int or manifest["schema_version"] != 1:
         raise IntegrityError("unsupported manifest schema")
     expected = manifest.get("legacy_trees")
     if not isinstance(expected, dict) or not expected:
