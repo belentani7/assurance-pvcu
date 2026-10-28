@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "source_repo_id": "1403504108",
+  "source_commit": "64882515c410bda999eb77a3eede0014f844a709",
+  "snapshot_date": "2026-10-03",
+  "description": "Immutable Git tree SHA-1 anchors for the ten flattened legacy directories; not a backup, privacy audit or deploy approval.",
+  "legacy_trees": {
+    "evidence-ledger": "94857f7ee116fe368c5e1869c0d3d34a996f1f74",
+    "failure-atlas": "0d858b3428025242d4ddf9d4b24d151af5c2fa89",
+    "lupa": "5510542a1a8b7ce562f484d087bdc221c1d0e86c",
+    "metricool-pvcu-dashboard-audited": "d2032299b6888df47cd696a991d81414a4627d7f",
+    "oss-compass": "b55b9131203095533870644fc014d66c5c8899fd",
+    "proofmesh": "4d667c665af997c3028205763aa55d674375a469",
+    "pvc-u-core": "ee8ceccb788c588bb907e35c350c1f817b0ea20e",
+    "pvc-u-frontend": "54b9e325b93202fb518eb0b1ec36250173b1dcc3",
+    "qbp-core": "38fc9a9ce99577a3693cdf7b1487e0eb75b14c70",
+    "sentinel-gates": "53caec45c6fd0ea7dde67c3c311e778bdee15c78"
+  }
+}
