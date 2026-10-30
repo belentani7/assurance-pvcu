@@ -8,9 +8,6 @@ permissions:
   contents: read
 
 jobs:
-  quality:
-    runs-on: ubuntu-latest
-    steps:
   analyze:
     runs-on: ubuntu-latest
     permissions:
@@ -20,5 +17,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: github/codeql-action/init@v3
         with:
-          languages: python javascript java
+          # python y javascript (javascript cubre también TypeScript).
+          # Java se excluye: el único código Java es el bloque legacy de Android
+          # (legacy/lupa/apps/android), que CodeQL no puede construir sin autobuild/SDK.
+          languages: python,javascript
       - uses: github/codeql-action/analyze@v3
