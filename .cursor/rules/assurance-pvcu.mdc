@@ -1,0 +1,28 @@
+---
+description: Reglas de desarrollo para assurance-pvcu (ecosistema belentani7)
+alwaysApply: true
+globs:
+  - "**/*.py"
+  - "**/*.js"
+  - "**/*.mjs"
+  - "**/*.html"
+  - "**/*.json"
+---
+
+# Reglas del ecosistema belentani7 — assurance-pvcu
+
+## Siempre (Python / JS / HTML contenedor legacy)
+- Pruebas: tests/test_basic.py, scripts/export.py. Python: pytest, type hints, docstrings, no bare except.
+- No commitear secretos. Ejecutar gitleaks antes de cada push.
+- Convenciones de commit: `type(scope): summary`.
+- Cada subproyecto legacy (evidence-ledger, lupa, metricool-*, oss-compass, proofmesh, pvc-u-*, qbp-core, sentinel-gates) respeta su propia gobernanza.
+
+## Siempre (HTML / Impeccable)
+- No gradient text. No side-stripe borders. No eyebrow en cada sección. No marcadores 01-09.
+- Hero heading <= 6rem (~96px): ecosistema.html h1 clamp max <= 6rem.
+- focus-visible en inputs/botones/select/textarea. lang y viewport en `<head>`.
+- Touch targets >= 44px. HTML semántico. alt en imágenes.
+- Tokens CANON: negro vacío #05030a, rojo neón #ff073a, dorado Zion #d4af37, cyan señal #4de8e0.
+
+## Seguridad
+- CODEOWNERS: @belentani7. gitleaks reglas belentani.
