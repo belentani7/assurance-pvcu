@@ -15,14 +15,12 @@ Uso:
 
 from __future__ import annotations
 
-import asyncio
 from datetime import datetime
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
-from .models import Domain
 from .orchestrator import PVCUOrchestrator
 
 # ──────────────── Pydantic Models para API ──────────────────────
@@ -36,23 +34,23 @@ class ValidateRequest(BaseModel):
 
 class ValidateResponse(BaseModel):
     valid: bool
-    errors: List[str]
-    warnings: List[str]
+    errors: list[str]
+    warnings: list[str]
     score: float
     risk_percent: float
-    spheres_executed: List[str]
+    spheres_executed: list[str]
 
 
 class HealRequest(BaseModel):
     task: str = Field(..., description="Tarea completa a auto-curar")
-    context: Dict[str, Any] = Field(default_factory=dict, description="Contexto adicional")
+    context: dict[str, Any] = Field(default_factory=dict, description="Contexto adicional")
 
 
 class ReportResponse(BaseModel):
     total_entries: int
     validation_rate: float
     avg_score: float
-    by_domain: List[Dict[str, Any]]
+    by_domain: list[dict[str, Any]]
 
 
 # ──────────────── FastAPI App ────────────────────────────────────
@@ -64,7 +62,7 @@ app = FastAPI(
 )
 
 # Instancia global del orquestador (se inicializa en startup)
-pvc_orchestrator: Optional[PVCUOrchestrator] = None
+pvc_orchestrator: PVCUOrchestrator | None = None
 
 
 @app.on_event("startup")
@@ -97,14 +95,14 @@ async def validate(request: ValidateRequest):
     """
     if not pvc_orchestrator:
         raise HTTPException(503, "Servicio no iniciado")
-    
+
     try:
         env = await pvc_orchestrator.validate(
             domain=request.domain,
             payload={"prompt": request.prompt, "response": request.response},
             profile=request.profile,
         )
-        
+
         return ValidateResponse(
             valid=env.is_valid,
             errors=env.errors,
@@ -130,13 +128,13 @@ async def auto_heal(request: HealRequest):
     """
     if not pvc_orchestrator:
         raise HTTPException(503, "Servicio no iniciado")
-    
+
     try:
         result = await pvc_orchestrator.auto_heal(
             task=request.task,
             context=request.context,
         )
-        
+
         return {
             "status": result["status"],
             "iterations": result["iterations"],
@@ -152,9 +150,9 @@ async def report():
     """Genera reporte completo con estadísticas del ledger."""
     if not pvc_orchestrator:
         raise HTTPException(503, "Servicio no iniciado")
-    
+
     stats = await pvc_orchestrator.generate_report()
-    
+
     return ReportResponse(
         total_entries=stats.get("total_entries", 0),
         validation_rate=stats.get("validation_rate", 0),
@@ -168,10 +166,10 @@ async def stats():
     """Devuelve métricas completas del protocolo."""
     if not pvc_orchestrator:
         raise HTTPException(503, "Servicio no iniciado")
-    
+
     full_stats = await pvc_orchestrator.generate_report()
     meta_stats = pvc_orchestrator.sphere_0.get_stats()
-    
+
     return {
         "ledger_stats": full_stats,
         "meta_validation": meta_stats,

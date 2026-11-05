@@ -2,15 +2,14 @@
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 from typing import Any
 
 import pytest
 
-from qbp.manifest import BindingManifest, MANIFEST_VERSION, REQUIRED_ASSET_TYPES
 from qbp.controls import ALL_CONTROL_TYPES
-from qbp.errors import ManifestValidationError, ManifestNotFoundError
+from qbp.errors import ManifestNotFoundError, ManifestValidationError
+from qbp.manifest import MANIFEST_VERSION, REQUIRED_ASSET_TYPES, BindingManifest
 
 
 class TestCreate:

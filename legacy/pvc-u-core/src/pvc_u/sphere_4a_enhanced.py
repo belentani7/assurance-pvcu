@@ -13,7 +13,6 @@ from __future__ import annotations
 
 import json
 import re
-from typing import Any, Dict, List, Optional
 
 from .models import PIIType, ValidationEnvelope
 
@@ -55,52 +54,52 @@ class Sphere4A_EnhancedValidator:
     def validate(self, env: ValidationEnvelope) -> ValidationEnvelope:
         prompt = env.prompt or ""
         response = env.response or ""
-        
+
         if not response:
             return env
-        
+
         self._check_advanced_pii(response, env)
         self._check_format(env.expected_format or "", response, env)
         self._check_anomalous_length(prompt, response, env)
-        
+
         return env
-    
+
     def _check_advanced_pii(self, text: str, env: ValidationEnvelope) -> None:
         """Detecta todo tipo de PII con patrones avanzados."""
-        found: Dict[str, int] = {}
-        
+        found: dict[str, int] = {}
+
         for pii_type, patterns in self.ADVANCED_PII.items():
             for pattern in patterns:
                 matches = re.findall(pattern, text)
                 if matches:
                     key = pii_type.value
                     found[key] = found.get(key, 0) + len(matches)
-        
+
         if found:
             details = "; ".join(f"{count}× {ptype}" for ptype, count in found.items())
             severity = "error" if any(k in ["email", "phone", "credit_card"] for k in found) else "warning"
-            
+
             if severity == "error":
                 env.add_error("PVC-4A-02", f"Fuga de PII detectada: {details}")
             else:
                 env.add_warning("WRN-PII", f"Posible dato sensible: {details}")
-    
+
     @staticmethod
     def _check_format(expected: str, response: str, env: ValidationEnvelope) -> None:
         exp = expected.lower().strip()
-        
+
         if exp == "json":
             try:
                 json.loads(response)
             except (json.JSONDecodeError, ValueError):
                 env.add_error("PVC-4A-03", "Formato JSON inválido.")
-    
+
     @staticmethod
     def _check_anomalous_length(prompt: str, response: str, env: ValidationEnvelope) -> None:
         ratio = len(response) / max(len(prompt or ""), 1)
-        
+
         if ratio > 100:
             env.add_warning("WRN-RATIO", f"Respuesta {ratio:.0f}x más larga que el prompt.")
-        
+
         if len(response) > 50000:
             env.add_error("PVC-4A-04", "Respuesta >50K caracteres — posible alucinación masiva.")

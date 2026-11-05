@@ -3,7 +3,6 @@ from __future__ import annotations
 import json
 
 import pytest
-
 from oss_compass import (
     ConfirmationReceipt,
     NodeConfirmation,

@@ -11,12 +11,10 @@ esferas caras con registro en ledger (optimización de costos).
 
 from __future__ import annotations
 
-import json
 import sqlite3
-from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
-from .models import ValidationEnvelope, Domain
+from .models import Domain, ValidationEnvelope
 
 
 class Sphere0_MetaValidator:
@@ -111,7 +109,7 @@ class Sphere0_MetaValidator:
         finally:
             conn.close()
 
-    def get_stats(self) -> Dict[str, Any]:
+    def get_stats(self) -> dict[str, Any]:
         """Devuelve estadísticas globales de todos los dominios."""
         conn = sqlite3.connect(self.db_path)
         try:

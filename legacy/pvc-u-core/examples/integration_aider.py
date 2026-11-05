@@ -8,7 +8,6 @@ automáticamente antes de hacer commit o entregar al cliente.
 
 import asyncio
 import subprocess
-from typing import Optional
 
 
 async def validate_with_aider(code_content: str, file_path: str = "generated_code.py") -> dict:
@@ -21,10 +20,10 @@ async def validate_with_aider(code_content: str, file_path: str = "generated_cod
     3. Si hay errores, se le pide a Aider que corrija
     """
     try:
-        from pvc_u import PVCUOrchestrator, Domain
-        
+        from pvc_u import Domain, PVCUOrchestrator
+
         pvc = PVCUOrchestrator(auto_correction=True)
-        
+
         # Validar código generado
         envelope = await pvc.validate(
             domain=Domain.WEB_DESIGN,
@@ -35,14 +34,14 @@ async def validate_with_aider(code_content: str, file_path: str = "generated_cod
                 "response": code_content[:1000],  # Primeros 1000 chars
             },
         )
-        
+
         return {
             "valid": envelope.is_valid,
             "errors": envelope.errors,
             "warnings": envelope.warnings,
             "score": envelope.meta_validation_score or 0.5,
         }
-        
+
     except ImportError:
         print("[ERROR] PVC-U no instalado — ejecutando simulación")
         return {"valid": True, "errors": [], "score": 0.9}
@@ -68,27 +67,27 @@ def run_aider_with_pvc_check(prompt: str, directory: str = ".") -> bool:
         "--no-auto-commits",
         "--yes-always",
     ]
-    
+
     result = subprocess.run(cmd, capture_output=True, text=True, cwd=directory)
     output = result.stdout + result.stderr
-    
+
     # 2. Validar con PVC-U
     validation = asyncio.run(validate_with_aider(output))
-    
+
     if not validation["valid"]:
-        print(f"[PVC-U] Código NO válido — Errores:")
+        print("[PVC-U] Código NO válido — Errores:")
         for err in validation["errors"]:
             print(f"  ❌ {err}")
-        
+
         # Opcional: pedir corrección automática
         correction_prompt = (
-            f"Corrige estos errores del código:\n" +
+            "Corrige estos errores del código:\n" +
             "\n".join(f"- {e}" for e in validation["errors"])
         )
-        print(f"\n[AIDER] Corrigiendo...")
+        print("\n[AIDER] Corrigiendo...")
         subprocess.run(["aider", "--message", correction_prompt], cwd=directory)
         return False
-    
+
     print(f"[PVC-U] ✅ Código validado correctamente (score: {validation['score']:.2f})")
     return True
 
@@ -100,6 +99,6 @@ if __name__ == "__main__":
         email = 'cliente@empresa.com'  # ¡FALTA! PII leak
         return f"Hola, tu pedido #{12345} está listo"
     """
-    
+
     result = asyncio.run(validate_with_aider(sample_code))
     print(f"Validación: {result}")

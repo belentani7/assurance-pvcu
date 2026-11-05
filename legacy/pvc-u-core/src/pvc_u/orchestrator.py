@@ -21,12 +21,11 @@ Integración con CEO (Agente autónomo):
 
 from __future__ import annotations
 
-import asyncio
 import os
-from typing import Any, Dict, List, Optional, Type
+from typing import Any
 
 from .ledger import Ledger
-from .models import Domain, DomainProfile, PIIType, ProfileCategory, ValidationEnvelope
+from .models import Domain, DomainProfile, ProfileCategory, ValidationEnvelope
 from .sphere_0 import Sphere0_MetaValidator
 from .sphere_2a import Sphere2A_SemanticAuditor
 from .sphere_3a import Sphere3A_InjectionDetector
@@ -60,7 +59,7 @@ class PVCUOrchestrator:
     async def validate(
         self,
         domain: Domain | str,
-        payload: Dict[str, Any],
+        payload: dict[str, Any],
         profile: str = "default",
     ) -> ValidationEnvelope:
         """Valida un payload completo a través de todas las esferas aplicables."""
@@ -104,11 +103,11 @@ class PVCUOrchestrator:
         while not env.is_valid and self.auto_correction and attempts < self.retry_max:
             attempts += 1
             correction_prompt = (
-                f"[CORRECCIÓN PVC-U]\n"
-                f"Tu respuesta falló la validación continua.\n\n"
-                f"Errores detectados:\n" + "\n".join(f"- {e}" for e in env.errors) + "\n\n"
-                f"WARNINGS:\n" + "\n".join(f"- {w}" for w in env.warnings) + "\n\n"
-                f"Por favor corrige estos problemas y genera una nueva respuesta."
+                "[CORRECCIÓN PVC-U]\n"
+                "Tu respuesta falló la validación continua.\n\n"
+                "Errores detectados:\n" + "\n".join(f"- {e}" for e in env.errors) + "\n\n"
+                "WARNINGS:\n" + "\n".join(f"- {w}" for w in env.warnings) + "\n\n"
+                "Por favor corrige estos problemas y genera una nueva respuesta."
             )
             payload["correction_instruction"] = correction_prompt
 
@@ -123,7 +122,7 @@ class PVCUOrchestrator:
 
         return env
 
-    async def _retry_validate(self, original_env: ValidationEnvelope, payload: Dict[str, Any]) -> ValidationEnvelope:
+    async def _retry_validate(self, original_env: ValidationEnvelope, payload: dict[str, Any]) -> ValidationEnvelope:
         """Re-valida con correcciones aplicadas."""
         corrected_payload = payload.copy()
         corrected_payload["original_errors"] = original_env.errors
@@ -157,7 +156,7 @@ class PVCUOrchestrator:
         if profile.ai_audit_enabled:
             self.sphere_2a.validate(env)
 
-    async def generate_report(self, domain: Optional[Domain] = None) -> Dict[str, Any]:
+    async def generate_report(self, domain: Domain | None = None) -> dict[str, Any]:
         """Genera reporte completo del estado de validación."""
         stats = self.ledger.get_statistics()
 
@@ -170,7 +169,7 @@ class PVCUOrchestrator:
 
         return stats
 
-    async def auto_heal(self, task: str, context: Dict[str, Any] | None = None) -> Dict[str, Any]:
+    async def auto_heal(self, task: str, context: dict[str, Any] | None = None) -> dict[str, Any]:
         """
         Auto-curación completa: valida → detecta fallo → regenera con LLM → revalida.
 
@@ -251,7 +250,7 @@ class PVCUOrchestrator:
         return "\n".join(instructions)
 
     def _simulate_agent_correction(
-        self, payload: Dict[str, Any], iteration: int
+        self, payload: dict[str, Any], iteration: int
     ) -> str:
         """Simula respuesta corregida por el agente."""
         # En producción, aquí se llamaría al agente real vía LiteLLM

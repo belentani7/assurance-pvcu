@@ -5,10 +5,9 @@ Cataloga: Issue, CVE, Post-mortem, Bug, PR rechazado
 Genera grafo: "Si haces X en contexto Y, termina pasando Z"
 """
 import json
-from pathlib import Path
-from datetime import datetime
 from dataclasses import dataclass
-from typing import List
+from datetime import datetime
+from pathlib import Path
 
 DATA_FILE = Path(__file__).parent / "failures.json"
 
@@ -23,8 +22,8 @@ class Failure:
     prevention: str
     severity: str  # critical/high/medium/low
     category: str
-    related_failures: List[str]
-    tags: List[str]
+    related_failures: list[str]
+    tags: list[str]
     source: str
     created_at: str
 
@@ -32,7 +31,7 @@ class FailureAtlas:
     def __init__(self):
         self.failures = self._load()
     
-    def _load(self) -> List[dict]:
+    def _load(self) -> list[dict]:
         if DATA_FILE.exists():
             return json.loads(DATA_FILE.read_text())
         return []
@@ -47,7 +46,7 @@ class FailureAtlas:
         self._save()
         return failure["id"]
     
-    def search(self, query: str) -> List[dict]:
+    def search(self, query: str) -> list[dict]:
         query_lower = query.lower()
         results = []
         for f in self.failures:
@@ -59,10 +58,10 @@ class FailureAtlas:
                 results.append((score, f))
         return [f for _, f in sorted(results, key=lambda x: -x[0])]
     
-    def by_severity(self, severity: str) -> List[dict]:
+    def by_severity(self, severity: str) -> list[dict]:
         return [f for f in self.failures if f.get("severity") == severity]
     
-    def by_category(self, category: str) -> List[dict]:
+    def by_category(self, category: str) -> list[dict]:
         return [f for f in self.failures if f.get("category") == category]
     
     def get_graph(self) -> dict:

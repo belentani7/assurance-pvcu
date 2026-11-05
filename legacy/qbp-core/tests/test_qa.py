@@ -7,8 +7,8 @@ from typing import Any
 
 import pytest
 
-from qbp.qa import QAReport, DEFAULT_DIMENSION_WEIGHTS
 from qbp.errors import QAReportParseError
+from qbp.qa import DEFAULT_DIMENSION_WEIGHTS, QAReport
 
 
 class TestParse:

@@ -12,13 +12,20 @@ import secrets
 import threading
 import time
 from collections import OrderedDict
+from collections.abc import Callable, Mapping
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-from typing import Any, Callable, Mapping
+from typing import Any
 from urllib import request
 
-from .crypto import canonical_json, key_fingerprint, public_key_for, sign_payload, verify_payload
+from .crypto import (
+    canonical_json,
+    key_fingerprint,
+    public_key_for,
+    sign_payload,
+    verify_payload,
+)
 from .pvcu import ConfirmationReceipt, NodeConfirmation, ValidationEnvelope
 
 MAX_REQUEST_BYTES = 131_072
@@ -76,7 +83,7 @@ class Ed25519NodeServer:
         parent = self
 
         class Handler(BaseHTTPRequestHandler):
-            def do_POST(self) -> None:  # noqa: N802
+            def do_POST(self) -> None:
                 if self.path != "/v2/confirm":
                     self.send_error(404)
                     return

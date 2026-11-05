@@ -7,16 +7,15 @@ Entidades centrales del protocolo: ValidationEnvelope, DomainProfile, SphereConf
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
-import hashlib
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from pydantic import BaseModel, Field, field_validator
-
 
 # ---------------------------------------------------------------------------
 # Enums
@@ -72,18 +71,18 @@ class ValidationEnvelope(BaseModel):
     id: str = Field(default_factory=lambda: hashlib.sha256(os.urandom(32)).hexdigest()[:16])
     timestamp: datetime = Field(default_factory=datetime.utcnow)
     domain: Domain
-    payload: Dict[str, Any]  # Prompt + response + metadata de IA
+    payload: dict[str, Any]  # Prompt + response + metadata de IA
     profile: str
     is_valid: bool = False
-    errors: List[str] = []
-    warnings: List[str] = []
-    meta_validation_score: Optional[float] = None
-    spheres_executed: List[SphereID] = []
+    errors: list[str] = []
+    warnings: list[str] = []
+    meta_validation_score: float | None = None
+    spheres_executed: list[SphereID] = []
     risk_assessment: float = 0.5  # Score 0-1 calculado por Esfera 0
 
     @field_validator("payload", mode="before")
     @classmethod
-    def ensure_payload_dict(cls, v: Any) -> Dict:
+    def ensure_payload_dict(cls, v: Any) -> dict:
         """Asegura que payload siempre es un dict serializable."""
         if isinstance(v, str):
             try:
@@ -95,15 +94,15 @@ class ValidationEnvelope(BaseModel):
         return v
 
     @property
-    def prompt(self) -> Optional[str]:
+    def prompt(self) -> str | None:
         return self.payload.get("prompt")
 
     @property
-    def response(self) -> Optional[str]:
+    def response(self) -> str | None:
         return self.payload.get("response")
 
     @property
-    def expected_format(self) -> Optional[str]:
+    def expected_format(self) -> str | None:
         return self.payload.get("expected_format")
 
     def add_error(self, code: str, message: str) -> None:
@@ -115,7 +114,7 @@ class ValidationEnvelope(BaseModel):
     def to_json(self, indent: int = 2) -> str:
         return self.model_dump_json(indent=indent)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "id": self.id,
             "timestamp": self.timestamp.isoformat(),
@@ -131,12 +130,12 @@ class ValidationEnvelope(BaseModel):
         }
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "ValidationEnvelope":
+    def from_dict(cls, data: dict[str, Any]) -> ValidationEnvelope:
         data.pop("model", None)  # Ignorar si viene en JSON
         return cls(**data)
 
     @classmethod
-    def from_json(cls, json_str: str) -> "ValidationEnvelope":
+    def from_json(cls, json_str: str) -> ValidationEnvelope:
         return cls.from_dict(json.loads(json_str))
 
 
@@ -153,12 +152,12 @@ class LedgerEntry(BaseModel):
     domain: str
     is_valid: bool
     error_count: int
-    score: Optional[float]
+    score: float | None
     risk_percent: float
     checksum: str
 
     @staticmethod
-    def compute_checksum(data: Dict[str, Any]) -> str:
+    def compute_checksum(data: dict[str, Any]) -> str:
         """Checksum SHA-256 para verificar integridad."""
         canonical = json.dumps(data, sort_keys=True)
         return hashlib.sha256(canonical.encode()).hexdigest()[:16]
@@ -198,7 +197,7 @@ class DomainProfile(BaseModel):
     domain: Domain
     category: ProfileCategory
     thresholds: ComplianceThreshold
-    required_spheres: List[SphereID] = []
+    required_spheres: list[SphereID] = []
     pii_detection_enabled: bool = True
     injection_detection_enabled: bool = True
     ai_audit_enabled: bool = True
@@ -213,7 +212,7 @@ class DomainProfile(BaseModel):
 
 # ─── Per-Domain Profiles Registry ──────────────────────────────────────
 
-PROFILES_REGISTRY: Dict[Domain, DomainProfile] = {
+PROFILES_REGISTRY: dict[Domain, DomainProfile] = {
     Domain.ECOMMERCE: DomainProfile(
         domain=Domain.ECOMMERCE,
         category=ProfileCategory.REST_LLM,
@@ -291,13 +290,13 @@ class PVCUConfig(BaseModel):
     def config_path(self) -> Path:
         return Path(__file__).parent.parent.parent / "config" / "pvcu.json"
 
-    def save(self, path: Optional[Path] = None) -> None:
+    def save(self, path: Path | None = None) -> None:
         p = path or self.config_path
         p.parent.mkdir(parents=True, exist_ok=True)
         p.write_text(self.model_dump_json(indent=2))
 
     @classmethod
-    def load(cls, path: Optional[Path] = None) -> "PVCUConfig":
+    def load(cls, path: Path | None = None) -> PVCUConfig:
         p = path or cls._default_config_path()
         if p.exists():
             return cls.model_validate_json(p.read_text())

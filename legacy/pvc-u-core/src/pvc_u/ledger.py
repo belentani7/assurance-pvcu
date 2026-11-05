@@ -11,13 +11,10 @@ from __future__ import annotations
 import hashlib
 import json
 from datetime import datetime
-from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
-import aiosqlite
-from sqlalchemy import Column, String, Integer, Text, Float, DateTime, func, create_engine
+from sqlalchemy import Column, DateTime, Float, Integer, String, Text, create_engine, func
 from sqlalchemy.orm import declarative_base, sessionmaker
-
 
 Base = declarative_base()
 
@@ -42,7 +39,7 @@ class LedgerEntry(Base):
     spheres_executed = Column(Text, default="[]")
     entry_hash = Column(String(64), unique=True, nullable=False)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "id": self.id,
             "envelope_id": self.envelope_id,
@@ -73,13 +70,13 @@ class Ledger:
         return self._engine
 
     @staticmethod
-    def compute_checksum(data: Dict[str, Any]) -> str:
+    def compute_checksum(data: dict[str, Any]) -> str:
         """Checksum SHA-256 para verificar integridad."""
         canonical = json.dumps(data, sort_keys=True).encode("utf-8")
         return hashlib.sha256(canonical).hexdigest()[:16]
 
     @staticmethod
-    def compute_entry_hash(entry: Dict[str, Any]) -> str:
+    def compute_entry_hash(entry: dict[str, Any]) -> str:
         """Hash completo del entry para blockchain-like verification."""
         essential = {k: entry.get(k) for k in ["id", "envelope_id", "timestamp", "domain", "is_valid"]}
         return hashlib.sha256(json.dumps(essential, sort_keys=True).encode()).hexdigest()
@@ -127,7 +124,7 @@ class Ledger:
         session.commit()
         session.close()
 
-    def query_by_domain(self, domain: str, limit: int = 100) -> List[Dict[str, Any]]:
+    def query_by_domain(self, domain: str, limit: int = 100) -> list[dict[str, Any]]:
         """Consulta últimos N registros por dominio."""
         session = sessionmaker(bind=self._get_engine)()
         results = (
@@ -140,7 +137,7 @@ class Ledger:
         session.close()
         return [entry.to_dict() for entry in results]
 
-    def get_statistics(self) -> Dict[str, Any]:
+    def get_statistics(self) -> dict[str, Any]:
         """Devuelve estadísticas globales del ledger."""
         session = sessionmaker(bind=self._get_engine)()
 

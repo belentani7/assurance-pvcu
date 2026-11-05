@@ -1,6 +1,11 @@
 import pytest
-
-from oss_compass import NodeConfig, NodeServer, confirm_over_network, required_fields, validate
+from oss_compass import (
+    NodeConfig,
+    NodeServer,
+    confirm_over_network,
+    required_fields,
+    validate,
+)
 
 
 def start_nodes(reject_node=None):
@@ -78,6 +83,7 @@ def test_network_requires_exactly_three_named_nodes():
 
 def test_node_rejects_replayed_nonce():
     import time
+
     from oss_compass.network import sign
 
     server = NodeServer(NodeConfig("node-a", "127.0.0.1", 0, "secret-node-a"))

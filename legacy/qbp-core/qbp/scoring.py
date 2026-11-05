@@ -7,7 +7,6 @@ All scoring functions operate on plain data (file paths, dicts).  ML backends
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 from typing import Any, Protocol
 
@@ -38,8 +37,8 @@ def _get_arcface() -> Any:
     global _arcface_model
     if _arcface_model is None:
         try:
-            from facenet_pytorch import InceptionResnetV1
             import torch
+            from facenet_pytorch import InceptionResnetV1
         except ImportError as exc:
             raise ScoringError(
                 "ArcFace requires 'facenet-pytorch' and 'torch'. "
@@ -305,7 +304,6 @@ def overall_consistency(scores: dict[str, float]) -> float:
 
 def _load_image_tensor(path: str | Path, device: str) -> Any:
     """Load an image and convert to a normalised tensor."""
-    import torch
     from torchvision import transforms
 
     transform = transforms.Compose([

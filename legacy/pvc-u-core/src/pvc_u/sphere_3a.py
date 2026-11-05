@@ -11,7 +11,6 @@ Códigos de error: PVC-3A-001 a PVC-3A-005
 from __future__ import annotations
 
 import re
-from typing import List, Optional
 
 from .models import ValidationEnvelope
 

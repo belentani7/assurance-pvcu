@@ -5,10 +5,16 @@ from __future__ import annotations
 import pytest
 
 from qbp.controls import (
-    ControlSignal,
     ALL_CONTROL_TYPES,
-    DEPTH, CANNY, LINEART, NORMAL, POSE,
-    IP_ADAPTER_STYLE, FACE_LOCK, REFERENCE,
+    CANNY,
+    DEPTH,
+    FACE_LOCK,
+    IP_ADAPTER_STYLE,
+    LINEART,
+    NORMAL,
+    POSE,
+    REFERENCE,
+    ControlSignal,
 )
 from qbp.errors import ControlSignalError, InvalidWeightError
 

@@ -9,9 +9,6 @@ Suite de tests para verificar el correcto funcionamiento de cada esfera:
 - Sphere 4A: Validación prompt/response + PII
 """
 
-import json
-from pathlib import Path
-from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
@@ -19,7 +16,6 @@ from pvc_u.models import Domain, ValidationEnvelope
 from pvc_u.sphere_0 import Sphere0_MetaValidator
 from pvc_u.sphere_3a import Sphere3A_InjectionDetector
 from pvc_u.sphere_4a import Sphere4A_PromptResponseValidator
-
 
 # ─── Fixtures ──────────────────────────────────────────────────────
 
@@ -67,7 +63,7 @@ class TestSphere0:
         env = ValidationEnvelope(domain=Domain.GENERAL, payload={}, profile="default")
         risk = sphere.predict_failure_risk(env)
         assert 0.0 <= risk <= 1.0
-    
+
     def test_get_stats_returns_dict(self):
         sphere = Sphere0_MetaValidator(db_path=":memory:")
         stats = sphere.get_stats()
@@ -82,7 +78,7 @@ class TestSphere3A:
         result = sphere.validate(injection_envelope)
         errors = [e for e in result.errors if "PVC-3A-01" in e]
         assert len(errors) > 0, "Debe detectar inyección directa"
-    
+
     def test_detects_jailbreak_keywords(self):
         env = ValidationEnvelope(
             domain=Domain.CHATBOT,
@@ -93,7 +89,7 @@ class TestSphere3A:
         result = sphere.validate(env)
         jailbreak_errors = [e for e in result.errors if "PVC-3A-10" in e]
         assert len(jailbreak_errors) > 0, "Debe detectar keyword DAN"
-    
+
     def test_no_false_positive_clean_prompt(self):
         env = ValidationEnvelope(
             domain=Domain.GENERAL,
@@ -113,7 +109,7 @@ class TestSphere4A:
         result = sphere.validate(pii_leak_envelope)
         pii_errors = [e for e in result.errors if "PVC-4A-02" in e]
         assert len(pii_errors) > 0, "Debe detectar fuga de email como PII"
-    
+
     def test_validates_json_format(self):
         env = ValidationEnvelope(
             domain=Domain.ECOMMERCE,
@@ -125,7 +121,7 @@ class TestSphere4A:
         result = sphere.validate(env)
         format_errors = [e for e in result.errors if "PVC-4A-03" in e]
         assert len(format_errors) > 0, "Debe rechazar formato inválido"
-    
+
     def test_allows_valid_json(self):
         env = ValidationEnvelope(
             domain=Domain.ECOMMERCE,
@@ -152,21 +148,21 @@ class TestIntegration:
             },
             profile="fhir+hipaa",
         )
-        
+
         s3a = Sphere3A_InjectionDetector()
         s4a = Sphere4A_PromptResponseValidator()
-        
+
         s3a.validate(env)
         s4a.validate(env)
-        
+
         assert len(env.errors) >= 2, "Debe tener error de inyección + PII"
-    
+
     def test_domain_profiles_affect_thresholds(self):
         from pvc_u.models import PROFILES_REGISTRY
-        
+
         health_profile = PROFILES_REGISTRY[Domain.SALUD]
         web_profile = PROFILES_REGISTRY[Domain.WEB_DESIGN]
-        
+
         assert health_profile.thresholds.min_score >= 0.9
         assert web_profile.thresholds.max_errors >= 3
 

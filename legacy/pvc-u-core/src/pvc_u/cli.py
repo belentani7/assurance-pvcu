@@ -15,8 +15,6 @@ from __future__ import annotations
 import asyncio
 import json
 import sys
-from datetime import datetime
-from pathlib import Path
 
 import click
 from rich.console import Console
@@ -25,7 +23,6 @@ from rich.table import Table
 
 from .models import Domain, PVCUConfig
 from .orchestrator import PVCUOrchestrator
-
 
 console = Console()
 

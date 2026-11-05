@@ -1,15 +1,16 @@
 from __future__ import annotations
 
-import hmac
 import hashlib
+import hmac
 import json
 import secrets
 import threading
 import time
+from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-from typing import Any, Callable
+from typing import Any
 from urllib import request
 
 from .pvcu import ConfirmationReceipt, NodeConfirmation, ValidationEnvelope
@@ -35,7 +36,7 @@ class NodeServer:
         parent = self
 
         class Handler(BaseHTTPRequestHandler):
-            def do_POST(self) -> None:  # noqa: N802
+            def do_POST(self) -> None:
                 if self.path != "/confirm":
                     self.send_error(404)
                     return

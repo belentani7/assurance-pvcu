@@ -1,4 +1,4 @@
-﻿# qbp-core
+# qbp-core
 
 Core SDK for the **Quadrachy Binding Protocol** ÔÇö a structured format for defining, validating, and quality-checking AI-generated assets across four consistency dimensions: identity fidelity, temporal consistency, PBR validity, and aesthetic coherence.
 

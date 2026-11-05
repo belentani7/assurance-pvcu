@@ -9,7 +9,7 @@ Expone métricas en /metrics para integración con Grafana/Prometheus:
 - pvc_validation_by_domain
 """
 
-from prometheus_client import Counter, Histogram, Gauge, generate_latest, CollectorRegistry
+from prometheus_client import CollectorRegistry, Counter, Gauge, Histogram, generate_latest
 
 # Contadores principales
 VALIDATION_REQUESTS = Counter(
@@ -48,7 +48,7 @@ def record_validation(domain: str, status: str, duration: float) -> None:
     """Registra una validación completada."""
     VALIDATION_REQUESTS.labels(domain=domain, status=status).inc()
     VALIDATION_DURATION.labels(domain=domain).observe(duration)
-    
+
     # Actualizar error rate si hubo errores
     if status == "invalid":
         DOMAIN_ERROR_RATE.labels(domain=domain).inc()

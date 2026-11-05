@@ -1,5 +1,4 @@
 import pytest
-
 from oss_compass import confirm_three_nodes, required_fields, validate
 
 

@@ -15,7 +15,6 @@ from __future__ import annotations
 
 import json
 import re
-from typing import Any, Dict, List, Optional
 
 from .models import ValidationEnvelope
 
@@ -106,7 +105,7 @@ class Sphere4A_PromptResponseValidator:
 
     def _check_pii_leakage(self, text: str, env: ValidationEnvelope) -> None:
         """Detecta datos personales filtrados en la respuesta."""
-        pii_found: Dict[str, int] = {}
+        pii_found: dict[str, int] = {}
 
         for pii_type, pattern in self.PII_PATTERNS.items():
             matches = re.findall(pattern, text)

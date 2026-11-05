@@ -3,7 +3,6 @@ from __future__ import annotations
 import time
 
 import pytest
-
 from oss_compass import (
     CoordinatorIdentity,
     Ed25519NodeServer,

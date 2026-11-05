@@ -10,9 +10,10 @@ from __future__ import annotations
 import hashlib
 import json
 import time
+from collections.abc import Iterable
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 from .crypto import canonical_json
 from .pvcu import ConfirmationReceipt, ValidationEnvelope
@@ -133,7 +134,7 @@ class ValidationLedger:
                 handle.write(json.dumps(entry.to_dict(), sort_keys=True, separators=(",", ":")) + "\n")
 
     @classmethod
-    def from_ndjson(cls, path: Path) -> "ValidationLedger":
+    def from_ndjson(cls, path: Path) -> ValidationLedger:
         entries: list[LedgerEntry] = []
         with path.open("rb") as handle:
             for line_number, raw_line in enumerate(handle, start=1):

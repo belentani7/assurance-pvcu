@@ -15,7 +15,7 @@ from __future__ import annotations
 
 import json
 import os
-from typing import Any, Dict, Optional
+from typing import Any
 
 from .models import ValidationEnvelope
 
@@ -50,7 +50,7 @@ class Sphere2A_SemanticAuditor:
 
         return env
 
-    def _run_audit(self, env: ValidationEnvelope) -> Dict[str, Any]:
+    def _run_audit(self, env: ValidationEnvelope) -> dict[str, Any]:
         """Envía el prompt de auditoría al LLM y parsea JSON."""
         from litellm import completion
 

@@ -11,14 +11,11 @@ el servicio "Agencia Cero-Alucinación" a clientes enterprise.
 """
 
 import asyncio
-import subprocess
-import os
-from typing import Dict, Any, Optional
-
+from typing import Any
 
 # Importar PVC-U
 try:
-    from pvc_u import PVCUOrchestrator, Domain
+    from pvc_u import Domain, PVCUOrchestrator
 except ImportError:
     # Fallback: si no está instalado, simular estructura
     print("[WARN] PVC-U no instalado — ejecutando en modo demo")
@@ -36,39 +33,39 @@ class AgencyCEO:
     4. VALIDA cada respuesta con PVC-U ANTES de devolver
     5. Auto-corrige si hay errores
     """
-    
+
     def __init__(self):
         self.pvc = PVCUOrchestrator(
             db_url="sqlite+pysqlite:///./ceo_ledger.db",
             auto_correction=True,
             retry_max_attempts=3,
         )
-        
+
         self.agents = {
             "coder": "mimo",      # MiMo Code para código
-            "qa": "aider",        # Aider para tests/security  
+            "qa": "aider",        # Aider para tests/security
             "designer": "ocx",    # OpenCodeX para frontend
         }
-    
-    async def execute_task(self, client_task: str, domain: Domain = Domain.ECOMMERCE) -> Dict[str, Any]:
+
+    async def execute_task(self, client_task: str, domain: Domain = Domain.ECOMMERCE) -> dict[str, Any]:
         """Ejecuta una tarea completa con validación continua."""
         print(f"\n[CEO] Task recibido: {client_task}")
-        
+
         # Paso 1: Descomponer (en producción, usarías LLM aquí)
         subtasks = [
             {"role": "coder", "prompt": f"Crea API REST para {client_task}", "domain": domain},
             {"role": "qa", "prompt": f"Escribe tests para {client_task}", "domain": domain},
             {"role": "designer", "prompt": f"Diseña UI para {client_task}", "domain": domain},
         ]
-        
+
         results = {}
-        
+
         for i, subtask in enumerate(subtasks, 1):
             print(f"[CEO] Ejecutando subtask {i}/{len(subtasks)}...")
-            
+
             # Ejecutar agente
             agent_result = self._run_agent(subtask["role"], subtask["prompt"])
-            
+
             # VALIDAR con PVC-U
             envelope = await self.pvc.validate(
                 domain=subtask["domain"],
@@ -78,46 +75,46 @@ class AgencyCEO:
                     "response": agent_result[:500],  # Primeros 500 chars
                 },
             )
-            
+
             if not envelope.is_valid:
                 print(f"[PVC-U] ⚠️ FALLÓ validación ({len(envelope.errors)} errores)")
                 print(f"         Errores: {[e.split(':')[0] for e in envelope.errors]}")
-                
+
                 # Auto-corrección
                 correction_prompt = (
-                    f"[CORRECCIÓN PVC-U]\n"
-                    f"Tu resultado falló la validación continua.\n\n"
-                    f"Errores:\n" + "\n".join(f"- {e}" for e in envelope.errors) + "\n\n"
-                    f"Por favor corrige estos problemas."
+                    "[CORRECCIÓN PVC-U]\n"
+                    "Tu resultado falló la validación continua.\n\n"
+                    "Errores:\n" + "\n".join(f"- {e}" for e in envelope.errors) + "\n\n"
+                    "Por favor corrige estos problemas."
                 )
-                
+
                 corrected_result = self._run_agent(subtask["role"], correction_prompt)
                 results[subtask["role"]] = corrected_result
             else:
-                print(f"[PVC-U] ✅ Validado correctamente")
+                print("[PVC-U] ✅ Validado correctamente")
                 results[subtask["role"]] = agent_result
-        
+
         return results
-    
+
     def _run_agent(self, agent_name: str, prompt: str) -> str:
         """Simula ejecución de agente (en producción sería subprocess real)."""
         # En producción real:
         # cmd = ["mimo", "run", "--dangerously-skip-permissions", prompt]
         # result = subprocess.run(cmd, capture_output=True, text=True)
         # return result.stdout + result.stderr
-        
+
         return f"[Simulación] {agent_name} procesó: {prompt[:100]}..."
 
 
 async def main():
     """Demo de integración CEO + PVC-U."""
     ceo = AgencyCEO()
-    
+
     # Ejemplo realista: construir SaaS completo
     task = "Construir sistema de gestión de proyectos con Next.js y PostgreSQL"
-    
+
     results = await ceo.execute_task(task, Domain.WEB_DESIGN)
-    
+
     print("\n[CEO] Resultados finales:")
     for role, content in results.items():
         print(f"  {role}: {content[:80]}...")

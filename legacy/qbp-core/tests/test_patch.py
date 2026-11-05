@@ -6,9 +6,9 @@ from typing import Any
 
 import pytest
 
+from qbp.errors import PatchApplicationError
 from qbp.patch import CorrectionPatch, auto_correct
 from qbp.qa import QAReport
-from qbp.errors import PatchApplicationError
 
 
 class TestFromReport:
