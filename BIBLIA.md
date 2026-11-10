@@ -34,3 +34,50 @@ Proveer una capa de aseguramiento, trazabilidad y validación para módulos lega
 ## Seguridad
 - gitleaks (.gitleaks.toml) reglas belentani.
 - CODEOWNERS: @belentani7.
+
+<!-- repo-forge:biblia:inicio -->
+# BIBLIA.md — assurance-pvcu
+
+Doctrina del producto del repositorio `assurance-pvcu` del ecosistema belentani7.
+
+## Visión
+
+monorepo de referencia con contratos, estados y trazabilidad de los 10 proyectos
+
+## Misión
+
+Una herramienta que se puede auditar: dice qué hace, lo hace, y deja rastro de lo que hizo.
+
+## Público
+
+equipo interno y auditores
+
+## Stack
+
+herramienta de línea de comandos en Python · TypeScript, YAML, JSON, HTML, Python, Markdown
+
+## Módulos que la promesa exige
+
+- Contratos
+- Estado por proyecto
+- Trazabilidad
+
+## Reglas de desarrollo
+
+- Protocolo spec-first: PRD → SRS → Design Doc → ADR → Plan → Tests.
+- Un cambio, un resultado verificable.
+- Nada se afirma sin ejecución; lo no probado se declara como no probado.
+- Escritura solo con confirmación; nada destructivo.
+- Idioma del producto: español, salvo el público del repositorio.
+- Secreto fuera de disco, logs y manifiestos.
+
+## Lo que este repositorio no va a hacer
+
+afirmar estado no verificado
+
+## Convenciones
+
+`type(scope): resumen` — feat, fix, docs, chore, refactor, test, perf.
+
+<!-- repo-forge:biblia -->
+<!-- repo-forge:biblia:fin -->

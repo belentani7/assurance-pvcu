@@ -1,0 +1,17 @@
+{
+  "name": "Assurance PVCU",
+  "short_name": "Assurance PV",
+  "description": "repositorio unificado de 10 proyectos (paraguas)",
+  "lang": "es",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f1419",
+  "theme_color": "#3ec3fe",
+  "icons": [
+    {
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -94,6 +94,74 @@ assurance-pvcu/
 
 MIT — Copyright (c) 2026 Belentani (ver [`LICENSE`](LICENSE)). Cada bloque de `legacy/` conserva además su propia licencia original.
 
+<!-- repo-forge:readme:inicio -->
+## Qué es
+
+**Assurance PVCU** — repositorio unificado de 10 proyectos (paraguas).
+
+Una herramienta que se puede auditar: dice qué hace, lo hace, y deja rastro de lo que hizo.
+
+## Estado medido
+
+| Dato | Valor |
+|---|---|
+| Lenguajes | TypeScript, YAML, JSON, HTML, Python, Markdown |
+| Archivos / líneas | 633 / 96936 |
+| Páginas HTML | 32 |
+| Tests detectados | 25 |
+| Cumplimiento de reglas | 32/34 (94.1%) |
+
+Todo lo anterior se midió en disco el 2026-11-10; no es una estimación.
+
+## Uso
+
+```bash
+python -m unittest discover -s tests -v
+python scripts/doctor.py
+```
+
+## Estructura
+
+```
+assets/
+brand/
+data/
+docs/
+legacy/
+plataforma/
+producto/
+scripts/
+site/
+tests/
+```
+
+## Diseño de plataforma
+
+- Contratos
+- Estado por proyecto
+- Trazabilidad
+
+La ficha completa —máximo potencial, marca, fases de monetización y recursos— vive en
+[`plataforma/FICHA.md`](plataforma/FICHA.md). Los tokens de marca están en
+[`brand/tokens.css`](brand/tokens.css).
+
+## Reglas del proyecto
+
+Este repositorio sigue el catálogo oficial del ecosistema (`GH-*`, `WEB-*`, `ACC-*`,
+`SEO-*`, `COH-*`, `DEV-*`). El gate se ejecuta con:
+
+```bash
+python scripts/doctor.py
+```
+
+## Licencia
+
+MIT. Ver [`LICENSE`](LICENSE).
+<!-- repo-forge:readme:fin -->
+<!-- repo-forge:readme:fin -->
+<!-- repo-forge:readme:fin -->
+<!-- repo-forge:readme:fin -->
 
 ## Producto
-Véase `plataforma/OFERTA.md`, `plataforma/precios.json`, `plataforma/ONEPAGER.md`.
+
+Oferta, precio y cobro: [`producto/OFERTA.md`](producto/OFERTA.md) · [`producto/precios.json`](producto/precios.json) · [`producto/landing.html`](producto/landing.html)

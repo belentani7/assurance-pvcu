@@ -1,10 +1,30 @@
 {
-  "repo": "assurance-pvcu",
-  "familia": "educación",
-  "ajustes_aplicados": 50,
-  "reglas_oficiales_ok": 48,
-  "estado": "estructurado",
-  "producto_completo": false,
-  "generado": "2026-11-10T18:58:32.775519+00:00",
-  "motor": "repo_forge.py"
+  "nombre": "assurance-pvcu",
+  "remoto": "https://github.com/belentani7/assurance-pvcu",
+  "tipo": "python-tool",
+  "modelo": "repositorio unificado de 10 proyectos (paraguas)",
+  "publico": "equipo interno y auditores",
+  "licencia": "MIT",
+  "medido": {
+    "archivos": 633,
+    "lineas": 96936,
+    "bytes": 3524662,
+    "html": 32,
+    "tests": 25
+  },
+  "modulos": [
+    "Contratos",
+    "Estado por proyecto",
+    "Trazabilidad"
+  ],
+  "paleta": {
+    "bg": "#0f1419",
+    "ink": "#e8eef6",
+    "accent": "#3ec3fe"
+  },
+  "fuente": {
+    "ruta": "repos\\assurance-pvcu",
+    "fecha": "2026-11-10"
+  },
+  "generado_por": "repo-forge"
 }
