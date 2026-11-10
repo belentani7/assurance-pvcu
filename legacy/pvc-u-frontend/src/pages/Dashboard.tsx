@@ -51,7 +51,7 @@ const Dashboard: React.FC = () => {
     avgScore: 0.89,
     activeAlerts: 3,
   });
-  
+
   const [events] = useState<ValidationEvent[]>([
     { id: 'abc123', domain: 'ecommerce', timestamp: '2026-09-03 14:32', valid: true, errors: 0, score: 0.95 },
     { id: 'def456', domain: 'salud', timestamp: '2026-09-03 14:30', valid: false, errors: 2, score: 0.45 },
@@ -59,14 +59,14 @@ const Dashboard: React.FC = () => {
     { id: 'jkl012', domain: 'chatbot', timestamp: '2026-09-03 14:25', valid: false, errors: 1, score: 0.72 },
     { id: 'mno345', domain: 'web_design', timestamp: '2026-09-03 14:22', valid: true, errors: 0, score: 0.88 },
   ]);
-  
+
   // In production, this would fetch real metrics from /api/v1/stats
   // useEffect(() => {
   //   fetch('/api/v1/stats')
   //     .then(r => r.json())
   //     .then(data => setMetrics(data));
   // }, []);
-  
+
   return (
     <div className="max-w-6xl mx-auto p-6 pb-12">
       {/* Header */}
@@ -88,7 +88,7 @@ const Dashboard: React.FC = () => {
 
       {/* Score Bars + Recent Events */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+
         {/* Validation Scores */}
         <div className="lg:col-span-2 neo-glass glow-border p-6">
           <NclSectionTitle>EVENTOS RECIENTES</NclSectionTitle>
@@ -120,7 +120,7 @@ const Dashboard: React.FC = () => {
                   <td className="py-3 px-3">
                     <div className="flex items-center gap-2">
                       <div className="w-16 bg-white/5 rounded h-1.5 overflow-hidden">
-                        <div 
+                        <div
                           className={`h-full rounded ${event.score > 0.8 ? 'bg-green-400' : event.score > 0.6 ? 'yellow-400' : 'nclr-red'}`}
                           style={{width: `${event.score * 100}%`, background: event.score > 0.8 ? '#4ade80' : event.score > 0.6 ? '#fbbf24' : '#ff073a', boxShadow: `0 0 6px ${event.score > 0.8 ? 'rgba(74,222,128,0.4)' : event.score > 0.6 ? 'rgba(251,191,36,0.4)' : 'rgba(255,7,58,0.4)'}`}}
                         />
@@ -137,7 +137,7 @@ const Dashboard: React.FC = () => {
         {/* Side Panel */}
         <div className="neo-glass glow-border p-6">
           <NclSectionTitle>CLUSTER STATUS</NclSectionTitle>
-          
+
           <div className="space-y-4 mb-6">
             {['ECOMMERCE', 'SALUD', 'FINANZAS', 'CHATBOT'].map((d, i) => (
               <div key={i} className="flex items-center justify-between">

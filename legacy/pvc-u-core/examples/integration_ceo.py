@@ -25,7 +25,7 @@ except ImportError:
 class AgencyCEO:
     """
     CEO simulado que valida TODO antes de entregar al cliente.
-    
+
     Patrón empresarial:
     1. Recibe task del cliente
     2. Descompone en subtareas

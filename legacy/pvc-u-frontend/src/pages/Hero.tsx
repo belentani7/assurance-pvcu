@@ -4,7 +4,7 @@ import { Shield, Zap, AlertTriangle } from 'lucide-react';
 
 const Hero: React.FC = () => {
   const navigate = useNavigate();
-  
+
   return (
     <div className="flex flex-col items-center justify-center min-h-[calc(100vh-80px)] px-4 text-center">
       {/* Hero Title */}
@@ -17,10 +17,10 @@ const Hero: React.FC = () => {
       <p className="text-xl max-w-2xl mb-12 text-gray-400">
         Garantiza que la IA no alucina, no filtra datos y cumple normativa regulatoria
       </p>
-      
+
       {/* Feature Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 w-full max-w-4xl">
-        <div 
+        <div
           className="glass-card p-6 glow-border float cursor-pointer"
           onClick={() => navigate('/validate')}
         >
@@ -30,7 +30,7 @@ const Hero: React.FC = () => {
             Esferas 0-4A verificando cada respuesta en tiempo real
           </p>
         </div>
-        
+
         <div className="glass-card p-6 glow-border float cursor-pointer" style={{ animationDelay: '0.5s' }}>
           <Zap className="w-12 h-12 mx-auto mb-4 neon-text" />
           <h3 className="text-lg font-semibold mb-2">Auto-Corrección</h3>
@@ -38,7 +38,7 @@ const Hero: React.FC = () => {
             Loop iterativo corrige automáticamente fallos detectados
           </p>
         </div>
-        
+
         <div className="glass-card p-6 glow-border float cursor-pointer" style={{ animationDelay: '1s' }}>
           <AlertTriangle className="w-12 h-12 mx-auto mb-4 neon-text" />
           <h3 className="text-lg font-semibold mb-2">Compliance Enterprise</h3>
@@ -47,7 +47,7 @@ const Hero: React.FC = () => {
           </p>
         </div>
       </div>
-      
+
       {/* CTA Buttons */}
       <div className="flex gap-4">
         <button

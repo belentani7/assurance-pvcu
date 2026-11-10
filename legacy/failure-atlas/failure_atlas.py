@@ -30,22 +30,22 @@ class Failure:
 class FailureAtlas:
     def __init__(self):
         self.failures = self._load()
-    
+
     def _load(self) -> list[dict]:
         if DATA_FILE.exists():
             return json.loads(DATA_FILE.read_text())
         return []
-    
+
     def _save(self):
         DATA_FILE.write_text(json.dumps(self.failures, indent=2, ensure_ascii=False))
-    
+
     def add(self, failure: dict) -> str:
         failure["id"] = f"F{len(self.failures)+1:04d}"
         failure["created_at"] = datetime.now().isoformat()
         self.failures.append(failure)
         self._save()
         return failure["id"]
-    
+
     def search(self, query: str) -> list[dict]:
         query_lower = query.lower()
         results = []
@@ -57,13 +57,13 @@ class FailureAtlas:
             if score > 0:
                 results.append((score, f))
         return [f for _, f in sorted(results, key=lambda x: -x[0])]
-    
+
     def by_severity(self, severity: str) -> list[dict]:
         return [f for f in self.failures if f.get("severity") == severity]
-    
+
     def by_category(self, category: str) -> list[dict]:
         return [f for f in self.failures if f.get("category") == category]
-    
+
     def get_graph(self) -> dict:
         """Generate failure pattern graph"""
         graph = {}
@@ -74,7 +74,7 @@ class FailureAtlas:
                 graph[trigger] = []
             graph[trigger].append(consequence)
         return graph
-    
+
     def stats(self) -> dict:
         severities = {}
         categories = {}
@@ -159,18 +159,18 @@ SAMPLE_FAILURES = [
 
 if __name__ == "__main__":
     atlas = FailureAtlas()
-    
+
     if len(atlas.failures) == 0:
         for f in SAMPLE_FAILURES:
             atlas.add(f)
         print(f"Loaded {len(SAMPLE_FAILURES)} sample failures")
-    
+
     print("\n=== FAILURE ATLAS ===")
     stats = atlas.stats()
     print(f"Total failures: {stats['total_failures']}")
     print(f"By severity: {stats['by_severity']}")
     print(f"By category: {stats['by_category']}")
-    
+
     print("\n--- Search 'security' ---")
     results = atlas.search("security")
     for r in results:

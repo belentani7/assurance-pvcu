@@ -93,3 +93,7 @@ assurance-pvcu/
 ## Licencia
 
 MIT — Copyright (c) 2026 Belentani (ver [`LICENSE`](LICENSE)). Cada bloque de `legacy/` conserva además su propia licencia original.
+
+
+## Producto
+Véase `plataforma/OFERTA.md`, `plataforma/precios.json`, `plataforma/ONEPAGER.md`.

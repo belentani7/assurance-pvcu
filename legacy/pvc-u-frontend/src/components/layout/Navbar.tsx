@@ -3,19 +3,19 @@ import { Link, useLocation } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
   const location = useLocation();
-  
+
   const navLinks = [
     { name: 'Dashboard', path: '/' },
     { name: 'Validate', path: '/validate' },
     { name: 'API Docs', path: '/docs' },
   ];
-  
+
   return (
     <nav className="glass-card m-4 p-4 flex justify-between items-center glow-border">
       <Link to="/" className="text-xl font-bold neon-text">
         PVC-U
       </Link>
-      
+
       <div className="flex gap-6">
         {navLinks.map((link) => (
           <Link

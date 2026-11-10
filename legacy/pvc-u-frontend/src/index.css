@@ -1,6 +1,6 @@
 /* ================================================
    NOIACORE THEME — NEO-NEOGLASS TOKEN INJECTION
-   
+
    PVC-U ya tiene fondo #0a0a0f + scrollbar roja.
    Inyectamos el sistema completo como override layer.
    ================================================ */
@@ -13,7 +13,7 @@
   --nclr-red-dim:     #ff4466;
   --nclr-red-deep:    rgba(255,7,58,0.08);
   --nclr-red-glow:    rgba(255,7,58,0.35);
-  
+
   /* Token system override */
   --background:       #0a0a0f;
   --foreground:       #e0e0e0;
@@ -63,25 +63,25 @@ body > * { position: relative; z-index: 1; }
     color: #e0e0e0;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
     letter-spacing: -0.02em;
   }
-  
+
   ::-webkit-scrollbar {
     width: 8px;
   }
-  
+
   ::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.02);
   }
-  
+
   ::-webkit-scrollbar-thumb {
     background: rgba(255, 7, 58, 0.3);
     border-radius: 4px;
   }
-  
+
   ::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 7, 58, 0.5);
   }

@@ -5,7 +5,7 @@ const Docs: React.FC = () => {
     <div className="max-w-4xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-2 neon-text">Documentación API</h1>
       <p className="text-gray-400 mb-8">Endpoints disponibles para integración de PVC-U</p>
-      
+
       {/* Endpoint Cards */}
       <div className="space-y-6">
         <div className="glass-card p-6 glow-border">
@@ -15,7 +15,7 @@ const Docs: React.FC = () => {
           </div>
           <h3 className="font-semibold mb-2">Validar Respuesta IA</h3>
           <p className="text-gray-400 mb-4">Envía un prompt y respuesta para validar contra las esferas PVC-U completas.</p>
-          
+
           <div className="bg-[rgba(0,0,0,0.3)] p-4 rounded-lg font-mono text-sm overflow-x-auto">
             <pre>{`{
   "domain": "salud",
@@ -25,7 +25,7 @@ const Docs: React.FC = () => {
 }`}</pre>
           </div>
         </div>
-        
+
         <div className="glass-card p-6 glow-border">
           <div className="flex items-center gap-3 mb-3">
             <span className="bg-yellow-500 text-black px-3 py-1 rounded text-sm font-mono">POST</span>
@@ -33,7 +33,7 @@ const Docs: React.FC = () => {
           </div>
           <h3 className="font-semibold mb-2">Auto-Corrección Iterativa</h3>
           <p className="text-gray-400 mb-4">Valida → detecta fallo → regenera con LLM → revalida automáticamente.</p>
-          
+
           <div className="bg-[rgba(0,0,0,0.3)] p-4 rounded-lg font-mono text-sm overflow-x-auto">
             <pre>{`{
   "task": "Generar informe médico HIPAA-compliant",
@@ -41,7 +41,7 @@ const Docs: React.FC = () => {
 }`}</pre>
           </div>
         </div>
-        
+
         <div className="glass-card p-6 glow-border">
           <div className="flex items-center gap-3 mb-3">
             <span className="bg-blue-500 text-white px-3 py-1 rounded text-sm font-mono">GET</span>
@@ -51,7 +51,7 @@ const Docs: React.FC = () => {
           <p className="text-gray-400 mb-4">Exponen métricas para scraping por Prometheus/Grafana.</p>
         </div>
       </div>
-      
+
       {/* Quick Start */}
       <div className="mt-12 glass-card p-6 glow-border">
         <h2 className="text-xl font-bold mb-4">Quick Start Python</h2>

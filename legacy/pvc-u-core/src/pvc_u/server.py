@@ -90,7 +90,7 @@ async def health():
 async def validate(request: ValidateRequest):
     """
     Valida una respuesta de agente IA contra las esferas PVC-U completas.
-    
+
     Detecta: inyección de prompt, fuga de PII, formato inválido, toxicidad.
     """
     if not pvc_orchestrator:
@@ -123,7 +123,7 @@ async def validate(request: ValidateRequest):
 async def auto_heal(request: HealRequest):
     """
     Valida → detecta fallo → regenera con LLM → revalida automáticamente.
-    
+
     Ideal para integración con CEO de agencia autónoma.
     """
     if not pvc_orchestrator:

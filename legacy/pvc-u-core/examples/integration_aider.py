@@ -13,7 +13,7 @@ import subprocess
 async def validate_with_aider(code_content: str, file_path: str = "generated_code.py") -> dict:
     """
     Valida código que Aider generó usando PVC-U.
-    
+
     Ejemplo de integración real:
     1. Aider genera código según prompt del cliente
     2. PVC-U valida el resultado ANTES de commit
@@ -52,7 +52,7 @@ async def validate_with_aider(code_content: str, file_path: str = "generated_cod
 def run_aider_with_pvc_check(prompt: str, directory: str = ".") -> bool:
     """
     Ejecuta Aider y luego valida su salida con PVC-U.
-    
+
     Patrón enterprise real:
     - Aider genera/modify código
     - PVC-U valida antes de commit

@@ -74,7 +74,7 @@ const Validation: React.FC = () => {
       {/* Form */}
       <div className="neo-glass glow-border p-6 space-y-5 mb-6">
         <NclSectionTitle>ENTRADA DE DATOS</NclSectionTitle>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
             <label className="ncl-label">DOMINIO</label>
@@ -109,7 +109,7 @@ const Validation: React.FC = () => {
       {result && (
         <div className="neo-glass glow-border p-6">
           <NclSectionTitle>RESULTADO</NclSectionTitle>
-          
+
           {/* Score display */}
           <div className="flex items-center gap-6 mb-6 bg-black/20 rounded-lg p-4">
             <div className={`grid size-14 place-items-center rounded-full ${result.valid ? 'bg-green-400/15' : 'bg-nclr-red/15'}`}>

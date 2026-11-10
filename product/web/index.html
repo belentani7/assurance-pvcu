@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#05030a">
+  <meta name="description" content="Valida respuestas de agentes de IA con PVC-U. Autoalojado, de código abierto y con un ledger local de evidencias.">
+  <title>Assurance PVC-U — validación continua de IA</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <header class="site-header">
+    <a class="brand" href="#inicio" aria-label="Assurance PVC-U, inicio">
+      <span class="brand-mark" aria-hidden="true">P</span>
+      <span>ASSURANCE <b>PVC-U</b></span>
+    </a>
+    <nav aria-label="Navegación principal">
+      <a href="#producto">Producto</a>
+      <a href="#probar">Probar</a>
+      <a href="#evidencia">Evidencia</a>
+      <a href="#planes">Planes</a>
+    </nav>
+    <a class="button button-small button-outline header-cta" href="#probar">Iniciar una validación <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="contenido">
+    <section class="hero section-wrap" id="inicio">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> GOBERNANZA DE IA · AUTOALOJADA</p>
+        <h1>Comprueba la respuesta.<br><span>Conserva la evidencia.</span></h1>
+        <p class="hero-lede">PVC-U ejecuta validaciones sobre respuestas de agentes y registra un recibo verificable. Tú controlas la instalación y los datos.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#probar">Probar una respuesta <span aria-hidden="true">↓</span></a>
+          <a class="text-link" href="https://github.com/belentani7/assurance-pvcu" target="_blank" rel="noopener noreferrer">Explorar el código <span aria-hidden="true">↗</span></a>
+        </div>
+        <ul class="trust-points" aria-label="Características principales">
+          <li><span aria-hidden="true">✓</span> Código abierto</li>
+          <li><span aria-hidden="true">✓</span> Sin paywall</li>
+          <li><span aria-hidden="true">✓</span> Ledger local</li>
+        </ul>
+      </div>
+      <div class="hero-visual" aria-label="Diagrama del ciclo de validación PVC-U">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="hero-core"><span>VALIDACIÓN</span><strong>PVC-U</strong><small>CONTINUA</small></div>
+        <span class="orbit-label orbit-label-a">ENTRADA</span>
+        <span class="orbit-label orbit-label-b">ESFERAS</span>
+        <span class="orbit-label orbit-label-c">EVIDENCIA</span>
+        <span class="signal signal-one"></span><span class="signal signal-two"></span>
+      </div>
+      <div class="hero-footnote"><span>01 / SISTEMA</span><span>LOCAL POR DISEÑO · REVISIÓN HUMANA SIEMPRE</span></div>
+    </section>
+
+    <section class="intro section-wrap" id="producto">
+      <div class="section-heading">
+        <p class="eyebrow">QUÉ HACE PVC-U</p>
+        <h2>Una capa de control<br>antes de publicar.</h2>
+      </div>
+      <div class="intro-copy">
+        <p>Conecta tu agente con una revisión técnica de prompt y respuesta. PVC-U comprueba patrones de inyección, señales de datos personales y criterios del dominio; devuelve un resultado explicable y registra sus metadatos.</p>
+        <p class="muted">Las validaciones son señales automatizadas. No certifican cumplimiento legal, no prueban que una respuesta sea verdadera y no reemplazan el juicio de tu equipo.</p>
+      </div>
+      <div class="capability-row">
+        <article class="capability">
+          <span class="capability-index">01</span><h3>Valida el intercambio</h3>
+          <p>Evalúa prompt y respuesta con el núcleo PVC-U y muestra alertas, score y esferas ejecutadas.</p>
+        </article>
+        <article class="capability">
+          <span class="capability-index">02</span><h3>Revisa el resultado</h3>
+          <p>Consulta decisiones previas, totales y checksums desde el ledger de tu instalación.</p>
+        </article>
+        <article class="capability">
+          <span class="capability-index">03</span><h3>Integra tu flujo</h3>
+          <p>Usa la API REST o la interfaz web. El producto corre en tu entorno, junto a tus servicios.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="workspace section-wrap" id="probar">
+      <div class="workspace-heading">
+        <div><p class="eyebrow">ÁREA DE TRABAJO / 01</p><h2>Valida una respuesta</h2></div>
+        <div class="api-status" id="api-status" role="status" aria-live="polite"><span class="status-dot" aria-hidden="true"></span><span>Conectando con PVC-U…</span></div>
+      </div>
+      <div class="workspace-grid">
+        <form class="validation-form" id="validation-form">
+          <div class="form-topline"><span>ENTRADA DE VALIDACIÓN</span><span>LOCAL · SIN ENVÍO EXTERNO POR DEFECTO</span></div>
+          <label for="domain">Dominio de revisión</label>
+          <select id="domain" name="domain">
+            <option value="general">General</option>
+            <option value="ecommerce">Comercio electrónico</option>
+            <option value="chatbot">Asistente conversacional</option>
+            <option value="web_design">Diseño web</option>
+            <option value="salud">Salud</option>
+            <option value="finanzas">Finanzas</option>
+          </select>
+          <label for="prompt">Prompt original <span>Incluye el contexto que recibió el agente</span></label>
+          <textarea id="prompt" name="prompt" rows="4" maxlength="30000" required placeholder="¿Qué le pidió la persona al agente?"></textarea>
+          <label for="response">Respuesta del agente</label>
+          <textarea id="response" name="response" rows="5" maxlength="30000" required placeholder="Pega aquí la respuesta que quieres revisar"></textarea>
+          <p class="privacy-note"><strong>Antes de continuar:</strong> el ledger guarda metadatos y checksums; el prompt y la respuesta se redactan antes de persistir. Salud, finanzas y chatbot pueden activar auditoría semántica. Si configuras LiteLLM con un proveedor externo, el contenido podría salir de este servidor. No uses datos sensibles sin revisar esa configuración.</p>
+          <button class="button button-primary submit-button" id="submit-button" type="submit">Ejecutar validación <span aria-hidden="true">↗</span></button>
+          <p class="form-message" id="form-message" role="status" aria-live="polite"></p>
+        </form>
+        <section class="result-panel" aria-labelledby="result-title" aria-live="polite">
+          <div class="panel-topline"><span id="result-title">RESULTADO PVC-U</span><span id="result-time">EN ESPERA</span></div>
+          <div class="result-empty" id="result-empty">
+            <div class="result-glyph" aria-hidden="true">◎</div>
+            <h3>Tu resultado aparecerá aquí</h3>
+            <p>Envía un prompt y una respuesta para ejecutar la primera comprobación.</p>
+          </div>
+          <div class="result-content" id="result-content" hidden>
+            <div class="result-verdict" id="result-verdict"></div>
+            <div class="score-line"><span>Score del motor</span><strong id="result-score">—</strong></div>
+            <div class="result-group" id="errors-group" hidden><h3>Errores</h3><ul id="result-errors"></ul></div>
+            <div class="result-group" id="warnings-group" hidden><h3>Revisión recomendada</h3><ul id="result-warnings"></ul></div>
+            <div class="result-group"><h3>Esferas ejecutadas</h3><div class="tag-list" id="result-spheres"></div></div>
+            <button class="button button-outline report-button" id="download-report" type="button">Descargar recibo JSON</button>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="evidence section-wrap" id="evidencia">
+      <div class="workspace-heading">
+        <div><p class="eyebrow">ÁREA DE TRABAJO / 02</p><h2>Registro de evidencias</h2></div>
+        <button class="button button-outline button-small" id="refresh-data" type="button">Actualizar datos</button>
+      </div>
+      <div class="metrics-row" aria-label="Resumen del ledger">
+        <div class="metric"><span>VALIDACIONES</span><strong id="metric-total">—</strong></div>
+        <div class="metric"><span>TASA ACEPTADA</span><strong id="metric-rate">—</strong></div>
+        <div class="metric"><span>SCORE MEDIO</span><strong id="metric-score">—</strong></div>
+        <p class="metric-caption" id="metric-caption">Los datos se cargan desde la API de esta instalación.</p>
+      </div>
+      <div class="events-wrap">
+        <div class="events-heading"><h3>Validaciones recientes</h3><span>ÚLTIMOS 30 REGISTROS</span></div>
+        <div class="events-state" id="events-state" role="status" aria-live="polite">Cargando ledger…</div>
+        <div class="events-list" id="events-list"></div>
+      </div>
+      <p class="checksum-note">Cada entrada incluye un checksum para detectar cambios en sus metadatos. La cadena de checksums no constituye por sí sola una prueba externa o un sello de tiempo independiente.</p>
+    </section>
+
+    <section class="plans section-wrap" id="planes">
+      <div class="plans-heading"><div><p class="eyebrow">CÓDIGO ABIERTO · SERVICIOS OPCIONALES</p><h2>Empieza libre.<br><span>Pide ayuda cuando la necesites.</span></h2></div><p>El núcleo y sus validaciones siguen disponibles para todos. Puedes contratar soporte, operación gestionada o integración a medida.</p></div>
+      <div class="plan-list" id="plan-list" aria-live="polite"><p class="catalog-state">Cargando oferta…</p></div>
+      <p class="plan-footnote">Importes en EUR según la oferta publicada. El alcance del SLA y del despliegue se acuerda antes de contratar. No hay cobro automático en esta instalación.</p>
+    </section>
+
+    <section class="closing section-wrap">
+      <p class="eyebrow">HECHO PARA INSTALARSE EN TU ENTORNO</p>
+      <h2>La evidencia de tu sistema,<br><span>bajo tu control.</span></h2>
+      <div class="closing-actions"><a class="button button-primary" href="https://github.com/belentani7/assurance-pvcu" target="_blank" rel="noopener noreferrer">Descargar el proyecto <span aria-hidden="true">↗</span></a><a class="text-link" href="https://github.com/belentani7/assurance-pvcu/issues/new/choose" target="_blank" rel="noopener noreferrer">Consultar servicios <span aria-hidden="true">↗</span></a></div>
+    </section>
+  </main>
+
+  <footer class="site-footer section-wrap">
+    <a class="brand" href="#inicio"><span class="brand-mark" aria-hidden="true">P</span><span>ASSURANCE <b>PVC-U</b></span></a>
+    <p>Validación técnica para decisiones humanas. No es una certificación normativa.</p>
+    <span>© 2026 Belentani · MIT</span>
+  </footer>
+</body>
+</html>
