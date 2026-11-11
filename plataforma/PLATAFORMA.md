@@ -1,0 +1,55 @@
+
+
+<!-- repo-forge:plataforma-plataforma:inicio -->
+# Diseño de plataforma — Assurance PVCU
+
+## Modelo
+
+repositorio unificado de 10 proyectos (paraguas), para equipo interno y auditores.
+
+## Principio de diseño
+
+el binario es libre; se cobra el servicio, no el código.
+
+## Módulos
+
+### Contratos
+
+- **Entrada:** por definir con el propietario.
+- **Salida:** por definir.
+- **Prueba:** por definir.
+
+### Estado por proyecto
+
+- **Entrada:** por definir con el propietario.
+- **Salida:** por definir.
+- **Prueba:** por definir.
+
+### Trazabilidad
+
+- **Entrada:** por definir con el propietario.
+- **Salida:** por definir.
+- **Prueba:** por definir.
+
+
+## Datos
+
+- metadatos
+- informes
+
+## Integraciones
+
+- git
+
+## Prototipo
+
+[`PROTOTIPO.html`](PROTOTIPO.html) es una página autocontenida, sin dependencias, que
+muestra la estructura y la paleta reales. Se abre en cualquier navegador.
+
+## Criterio de terminado
+
+Cada módulo necesita: contrato escrito, prueba ejecutada y una persona ajena capaz de
+usarlo sin explicación previa.
+
+<!-- repo-forge:plataforma -->
+<!-- repo-forge:plataforma-plataforma:fin -->

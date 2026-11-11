@@ -1,0 +1,78 @@
+{
+  "esquema": "repo-forge/ficha/1",
+  "nombre": "assurance-pvcu",
+  "remoto": "https://github.com/belentani7/assurance-pvcu",
+  "arquetipo": "python-tool",
+  "stack": "TypeScript",
+  "modelo": "repositorio unificado de 10 proyectos (paraguas)",
+  "publico": "equipo interno y auditores",
+  "techo": "monorepo de referencia con contratos, estados y trazabilidad de los 10 proyectos",
+  "modulos": [
+    "Contratos",
+    "Estado por proyecto",
+    "Trazabilidad"
+  ],
+  "no_go": "afirmar estado no verificado",
+  "marca": {
+    "nombre": "Assurance PVCU",
+    "familia": "herramienta",
+    "paleta": {
+      "familia": "herramienta",
+      "bg": "#0f1419",
+      "surface": "#191e23",
+      "ink": "#e8eef6",
+      "muted": "#969ba2",
+      "accent": "#3ec3fe",
+      "accent2": "#a3e635",
+      "ok": "#15803d",
+      "warn": "#b45309",
+      "danger": "#b91c1c",
+      "contraste_ink_bg": 15.86,
+      "contraste_accent_bg": 9.2,
+      "accent_sobre_bg_ok": true
+    },
+    "narrativa": "Menos ceremonia, más resultado"
+  },
+  "paywall": {
+    "principio": "el binario es libre; se cobra el servicio, no el código",
+    "fases": 4
+  },
+  "medido": {
+    "archivos": 633,
+    "lineas": 96936,
+    "html": 32,
+    "tests": 25,
+    "bytes": 3524662,
+    "lenguajes": {
+      "TypeScript": 35.1,
+      "YAML": 29.8,
+      "JSON": 9.5,
+      "HTML": 9.0,
+      "Python": 6.8,
+      "Markdown": 5.6
+    },
+    "fecha": "2026-11-10"
+  },
+  "gate": {
+    "pass": 32,
+    "fail": 2,
+    "skip": 15,
+    "cumplimiento": 94.1,
+    "fallos": [
+      "WEB-05",
+      "SEO-01"
+    ]
+  },
+  "ajustes": {
+    "total": 65,
+    "aplicados": 56,
+    "ya_estaban": 9,
+    "fallos": 0
+  },
+  "esfuerzo_dias": 31,
+  "doctor": {
+    "ok": true,
+    "detalle": "35/35 comprobaciones en verde"
+  },
+  "huella": "73e901828aa1c95f"
+}
