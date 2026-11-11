@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Sphere 4A — Validación de Entradas/Salidas de LLMs
 ===================================================

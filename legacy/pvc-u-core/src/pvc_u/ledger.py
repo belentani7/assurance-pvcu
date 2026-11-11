@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Ledger — Base de datos inmutable para auditoría continua
 =========================================================

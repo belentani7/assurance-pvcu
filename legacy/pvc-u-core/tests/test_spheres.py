@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Tests de las Esferas — Validación completa del protocolo PVC-U
 ===============================================================

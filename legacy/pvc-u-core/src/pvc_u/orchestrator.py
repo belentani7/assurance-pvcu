@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 PVCUOrchestrator — Orquestador principal del protocolo
 ======================================================

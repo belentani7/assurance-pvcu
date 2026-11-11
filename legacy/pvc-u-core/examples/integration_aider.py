@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Ejemplo: Integración de PVC-U con Aider (CLI autónomo)
 ========================================================

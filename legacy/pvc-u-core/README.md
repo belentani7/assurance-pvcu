@@ -184,3 +184,7 @@ Empaquetas PVCU como microservicio FastAPI y vendés a otras agencias que usan C
 ## License
 
 MIT — Usa libremente en producción empresarial.
+
+
+## Producto
+Véase `plataforma/OFERTA.md`.

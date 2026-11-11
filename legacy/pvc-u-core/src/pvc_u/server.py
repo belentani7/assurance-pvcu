@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 FastAPI Server — API REST para PVC-U
 =====================================

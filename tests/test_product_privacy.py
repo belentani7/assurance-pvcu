@@ -47,6 +47,27 @@ class TestPayloadRedaction(unittest.TestCase):
         self.assertEqual(record["payload_preview"], "{'prompt': '[REDACTED]', 'response': '[REDACTED]'}")
         self.assertEqual(record["entry_hash"], "entry-hash")
 
+    def test_ledger_record_accepts_core_sphere_names_as_strings(self):
+        ledger = type("Ledger", (), {
+            "compute_checksum": staticmethod(lambda value: "checksum"),
+            "compute_entry_hash": staticmethod(lambda value: "entry-hash"),
+        })()
+        envelope = type("Envelope", (), {
+            "id": "evt-2",
+            "timestamp": "2026-11-10T12:00:00",
+            "domain": "general",
+            "payload": {"prompt": "private", "response": "private"},
+            "profile": "default",
+            "is_valid": True,
+            "errors": [],
+            "warnings": [],
+            "meta_validation_score": 0.9,
+            "risk_assessment": 0.1,
+            "spheres_executed": ["Sphere0_MetaValidator"],
+        })()
+        record = ledger_record_values(ledger, envelope)
+        self.assertEqual(record["spheres_executed"], '["Sphere0_MetaValidator"]')
+
 
 if __name__ == "__main__":
     unittest.main()

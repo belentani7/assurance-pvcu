@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 PVC-U — Protocolo de Validación Continua Universal
 ===================================================

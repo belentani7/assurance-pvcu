@@ -36,6 +36,8 @@ def ledger_record_values(ledger: Any, envelope: Any) -> dict[str, Any]:
         "meta_score": envelope.meta_validation_score,
         "risk_assessment": envelope.risk_assessment,
         "checksum": ledger.compute_checksum(check_data),
-        "spheres_executed": json.dumps([sphere.value for sphere in envelope.spheres_executed]),
+        "spheres_executed": json.dumps([
+            str(getattr(sphere, "value", sphere)) for sphere in envelope.spheres_executed
+        ]),
         "entry_hash": ledger.compute_entry_hash(check_data),
     }

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Sphere 2A — Validación de Comportamiento Semántico con IA
 ============================================================

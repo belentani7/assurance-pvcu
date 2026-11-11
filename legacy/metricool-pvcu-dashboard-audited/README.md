@@ -19,3 +19,7 @@ Esta publicación no reemplaza el proyecto WebDev original. El repositorio es pr
 La plataforma está evolucionando desde una consola centrada en Metricool hacia **Duck Studio**: un core universal de contenido, proyectos, adaptadores sociales y validación PVC-U. Metricool queda tratado como una dependencia externa detrás de un adaptador; cuando no existe proveedor configurado, el AI Router conserva un modo manual determinista.
 
 La arquitectura, seguridad, privacidad, modelo de amenazas, plugin security, PVC-U y pruebas están documentados en [`ARCHITECTURE.md`](ARCHITECTURE.md), [`SECURITY.md`](SECURITY.md), [`THREAT_MODEL.md`](THREAT_MODEL.md), [`PRIVACY.md`](PRIVACY.md), [`PLUGIN_SECURITY.md`](PLUGIN_SECURITY.md), [`PVC-U.md`](PVC-U.md), [`TEST_REPORT.md`](TEST_REPORT.md) e [`IMPLEMENTATION_STATUS.md`](IMPLEMENTATION_STATUS.md). Las capacidades parciales se etiquetan explícitamente y no se presentan como terminadas.
+
+
+## Producto
+Véase `plataforma/OFERTA.md`.

@@ -24,6 +24,17 @@ class TestProductApiSerialization(unittest.TestCase):
             "spheres_executed": ["sphere-3a-injection"],
         })
 
+    def test_validation_serializes_core_sphere_names_as_strings(self):
+        result = SimpleNamespace(
+            is_valid=True,
+            errors=[],
+            warnings=[],
+            meta_validation_score=0.9,
+            risk_assessment=0.1,
+            spheres_executed=["Sphere0_MetaValidator"],
+        )
+        self.assertEqual(serialize_validation(result)["spheres_executed"], ["Sphere0_MetaValidator"])
+
     def test_empty_ledger_report_is_zeroed(self):
         self.assertEqual(serialize_report(0, 0, None, []), {
             "total_entries": 0,

@@ -1,0 +1,2 @@
+# PAYWALL — assets
+Familia: seguridad

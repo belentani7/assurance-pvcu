@@ -35,3 +35,7 @@ no significa nada para quien lee el repositorio.
 ## Licencia
 
 Sin licencia declarada.
+
+
+## Producto
+Véase `plataforma/OFERTA.md`.

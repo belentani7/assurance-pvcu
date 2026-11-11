@@ -41,3 +41,7 @@ El procedimiento `audits.exportJson` devuelve un objeto JSON nativo apto para co
 ## Licencia
 
 ProofMesh se distribuye bajo licencia MIT. Consulta [LICENSE](LICENSE), [SECURITY.md](SECURITY.md) y [CONTRIBUTING.md](CONTRIBUTING.md) para las normas del proyecto.
+
+
+## Producto
+Véase `plataforma/OFERTA.md`.

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Sphère 0 — Meta-Validador Predictivo
 ====================================

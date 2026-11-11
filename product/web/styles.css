@@ -34,10 +34,10 @@ button:focus-visible, a:focus-visible, select:focus-visible, textarea:focus-visi
 .brand b { color: var(--cyan); font-weight: 500; }
 .brand-mark { display: grid; width: 32px; height: 32px; place-items: center; border: 1px solid var(--red); color: var(--red); font: 500 15px var(--mono); }
 .site-header nav { display: flex; align-items: center; gap: 30px; }
-.site-header nav a { color: var(--muted); font-size: 13px; text-decoration: none; }
+.site-header nav a { display: flex; min-height: 44px; align-items: center; color: var(--muted); font-size: 13px; text-decoration: none; }
 .site-header nav a:hover, .text-link:hover { color: var(--cyan); }
 .button { display: inline-flex; min-height: 50px; align-items: center; justify-content: center; gap: 12px; padding: 0 21px; border: 1px solid transparent; border-radius: 2px; color: var(--text); font-weight: 700; font-size: 13px; text-decoration: none; cursor: pointer; transition: background-color .16s ease, border-color .16s ease, color .16s ease; }
-.button-small { min-height: 42px; padding-inline: 15px; font-size: 12px; }
+.button-small { min-height: 44px; padding-inline: 15px; font-size: 12px; }
 .button-primary { background: var(--red); color: white; }
 .button-primary:hover { background: #d9002c; }
 .button-primary:disabled { cursor: wait; opacity: .65; }
@@ -145,7 +145,7 @@ h1 span, .plans h2 span, .closing h2 span { color: var(--gold); }
 .plan-name { font-size: 14px; font-weight: 800; }
 .plan-price { color: var(--gold); font: 500 15px var(--mono); white-space: nowrap; }
 .plan-description { margin: 0; color: var(--muted); font-size: 11px; }
-.plan-row .text-link { font-size: 11px; white-space: nowrap; }
+.plan-row .text-link { display: inline-flex; min-height: 44px; align-items: center; font-size: 11px; white-space: nowrap; }
 .catalog-state { margin: 0; padding: 20px 12px; color: var(--muted); font-size: 12px; }
 .catalog-state.is-error { color: #ff9bad; }
 .plan-footnote { margin-top: 18px; }

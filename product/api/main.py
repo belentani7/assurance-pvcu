@@ -9,7 +9,7 @@ from typing import Any
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
-from sqlalchemy import func
+from sqlalchemy import func, make_url
 from sqlalchemy.orm import sessionmaker
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -18,6 +18,7 @@ if str(CORE_SOURCE) not in sys.path:
     sys.path.insert(0, str(CORE_SOURCE))
 
 from pvc_u.ledger import LedgerEntry  # noqa: E402
+from pvc_u import orchestrator as pvc_u_orchestrator  # noqa: E402
 from pvc_u.orchestrator import PVCUOrchestrator  # noqa: E402
 
 from .privacy import ledger_record_values  # noqa: E402
@@ -25,6 +26,37 @@ from .privacy import ledger_record_values  # noqa: E402
 DATA_DIR = Path(os.getenv("PVC_U_DATA_DIR", str(ROOT / "data")))
 PRICE_FILE = ROOT / "plataforma" / "precios.json"
 orchestrator: PVCUOrchestrator | None = None
+
+
+def create_orchestrator(db_url: str) -> PVCUOrchestrator:
+    """Adapt the legacy sphere-0 constructor, which expects a SQLite path."""
+    if not db_url.startswith("sqlite"):
+        return PVCUOrchestrator(
+            db_url=db_url,
+            llm_base_url=os.getenv("PVC_U_LLAM_BASE_URL", "http://localhost:4000/v1"),
+            llm_api_key=os.getenv("PVC_U_LL_API_KEY", "not-needed"),
+            auto_correction=False,
+        )
+
+    sphere_class = pvc_u_orchestrator.Sphere0_MetaValidator
+    sqlite_path = make_url(db_url).database
+    if sqlite_path and sqlite_path != ":memory:":
+        Path(sqlite_path).parent.mkdir(parents=True, exist_ok=True)
+
+    class ProductSphere0(sphere_class):
+        def __init__(self, _: str):
+            super().__init__(sqlite_path)
+
+    pvc_u_orchestrator.Sphere0_MetaValidator = ProductSphere0
+    try:
+        return PVCUOrchestrator(
+            db_url=db_url,
+            llm_base_url=os.getenv("PVC_U_LLAM_BASE_URL", "http://localhost:4000/v1"),
+            llm_api_key=os.getenv("PVC_U_LL_API_KEY", "not-needed"),
+            auto_correction=False,
+        )
+    finally:
+        pvc_u_orchestrator.Sphere0_MetaValidator = sphere_class
 
 
 class ValidationRequest(BaseModel):
@@ -41,7 +73,7 @@ def serialize_validation(result: Any) -> dict[str, Any]:
         "warnings": result.warnings,
         "score": result.meta_validation_score if result.meta_validation_score is not None else 0.5,
         "risk_percent": result.risk_assessment * 100,
-        "spheres_executed": [sphere.value for sphere in result.spheres_executed],
+        "spheres_executed": [str(getattr(sphere, "value", sphere)) for sphere in result.spheres_executed],
     }
 
 
@@ -75,12 +107,7 @@ async def lifespan(_: FastAPI):
     global orchestrator
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     db_url = os.getenv("PVC_U_DB_URL", f"sqlite+pysqlite:///{(DATA_DIR / 'pvc_u_ledger.db').as_posix()}")
-    engine = PVCUOrchestrator(
-        db_url=db_url,
-        llm_base_url=os.getenv("PVC_U_LLAM_BASE_URL", "http://localhost:4000/v1"),
-        llm_api_key=os.getenv("PVC_U_LL_API_KEY", "not-needed"),
-        auto_correction=False,
-    )
+    engine = create_orchestrator(db_url)
     def privacy_preserving_log(envelope: Any) -> None:
         values = ledger_record_values(engine.ledger, envelope)
         session = sessionmaker(bind=engine.ledger._get_engine())()
@@ -92,16 +119,10 @@ async def lifespan(_: FastAPI):
 
     engine.ledger.log = privacy_preserving_log
 
-    # Sphere 0 uses sqlite3 directly; give it the same database file as SQLAlchemy.
-    if db_url.startswith("sqlite") and "///" in db_url:
-        sqlite_path = db_url.split("///", 1)[1]
-        engine.sphere_0.db_path = sqlite_path
-        if sqlite_path != ":memory:":
-            Path(sqlite_path).parent.mkdir(parents=True, exist_ok=True)
-
     orchestrator = engine
     yield
     orchestrator = None
+    engine.ledger._get_engine().dispose()
 
 
 app = FastAPI(

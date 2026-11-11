@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Sphere 3A — Detección de Inyección de Prompt
 =============================================

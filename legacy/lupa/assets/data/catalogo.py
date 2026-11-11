@@ -1,0 +1,2 @@
+REPO = "assets"
+FAMILIA = "seguridad"

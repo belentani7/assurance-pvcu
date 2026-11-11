@@ -32,3 +32,7 @@ graph = atlas.get_graph()
 ## Licencia
 
 MIT — Pedro Belentani 2026
+
+
+## Producto
+Véase `plataforma/OFERTA.md`.

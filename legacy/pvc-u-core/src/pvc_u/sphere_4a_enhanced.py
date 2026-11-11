@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Sphere 4A Enhanced — Detección PII Avanzada con Regex + ML fallback
 ====================================================================

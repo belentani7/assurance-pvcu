@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 PVC-U CLI — Interfaz de línea de comandos
 ===========================================
